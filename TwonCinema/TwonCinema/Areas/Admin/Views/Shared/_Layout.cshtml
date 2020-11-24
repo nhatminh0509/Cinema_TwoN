@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    @await Html.PartialAsync("_HeadPartial.cshtml")
+</head>
+<body>
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        @await Html.PartialAsync("_HeaderPartial.cshtml")
+        @await Html.PartialAsync("_SideBarPartial.cshtml")
+        <div class="page-wrapper">
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="container-fluid">
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+            @await Html.PartialAsync("_FooterPartial.cshtml")
+        </div>
+    </div>
+    @await Html.PartialAsync("_ScriptPartial.cshtml")
+</body>
+@RenderSection("Scripts", required: false)
+</html>
