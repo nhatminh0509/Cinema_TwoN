@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+ESvI7lOFHkyVZGWEJyN1AiwnUwgkhZX1bAjvqSkqxESwWl/9D00tZENy+UodWQwTCpe6vQwBrw2WMTjU65AHw==",
+  "dgSpecHash": "vMnv4BJ3is7KhwoyDCjaqmFjB75L3ppottzm0ub52/SlpS17YvGJ87+rU5Wjs5kMh2vrGQ5pqqkkAMR82pIJVQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema\\TwonCinema\\TwonCinema\\TwonCinema.csproj",
+  "projectFilePath": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema_ASP\\TwonCinema\\TwonCinema\\TwonCinema.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Nhat-Minh\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Nhat-Minh\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",

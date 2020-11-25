@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TwonCinema.Areas.Admin.Models
 {
-    public class Materials
+    public class Equipment
     {
         [Key]
         public int ID { get; set; }
@@ -20,6 +20,6 @@ namespace TwonCinema.Areas.Admin.Models
         public virtual Room Room { get; set; }
         [Required(ErrorMessage = "Cấp bậc ghế không được bỏ trống")] public int Seat_Level_ID { get; set; }
         [ForeignKey("Seat_Level_ID")]
-        public virtual Category_Materials Seat_Level { get; set; }
+        public virtual Category_Equipment Category_Equipment { get; set; }
     }
 }

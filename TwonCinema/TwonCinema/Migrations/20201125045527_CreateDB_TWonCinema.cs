@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TwonCinema.Migrations
 {
-    public partial class CreateDB_TwonCinema : Migration
+    public partial class CreateDB_TWonCinema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Category_Materials",
+                name: "Category_Equipment",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -24,7 +24,7 @@ namespace TwonCinema.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category_Materials", x => x.ID);
+                    table.PrimaryKey("PK_Category_Equipment", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,7 +118,7 @@ namespace TwonCinema.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Materials",
+                name: "Equipment",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -132,15 +132,15 @@ namespace TwonCinema.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Materials", x => x.ID);
+                    table.PrimaryKey("PK_Equipment", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Materials_Category_Materials_Seat_Level_ID",
+                        name: "FK_Equipment_Category_Equipment_Seat_Level_ID",
                         column: x => x.Seat_Level_ID,
-                        principalTable: "Category_Materials",
+                        principalTable: "Category_Equipment",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Materials_Rooms_Room_ID",
+                        name: "FK_Equipment_Rooms_Room_ID",
                         column: x => x.Room_ID,
                         principalTable: "Rooms",
                         principalColumn: "ID",
@@ -181,13 +181,13 @@ namespace TwonCinema.Migrations
                 column: "Manager_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Materials_Room_ID",
-                table: "Materials",
+                name: "IX_Equipment_Room_ID",
+                table: "Equipment",
                 column: "Room_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Materials_Seat_Level_ID",
-                table: "Materials",
+                name: "IX_Equipment_Seat_Level_ID",
+                table: "Equipment",
                 column: "Seat_Level_ID");
 
             migrationBuilder.CreateIndex(
@@ -209,13 +209,13 @@ namespace TwonCinema.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Materials");
+                name: "Equipment");
 
             migrationBuilder.DropTable(
                 name: "Movie_Shows");
 
             migrationBuilder.DropTable(
-                name: "Category_Materials");
+                name: "Category_Equipment");
 
             migrationBuilder.DropTable(
                 name: "Movies");

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema\\TwonCinema\\TwonCinema\\TwonCinema.csproj": {}
+    "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema_ASP\\TwonCinema\\TwonCinema\\TwonCinema.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema\\TwonCinema\\TwonCinema\\TwonCinema.csproj": {
+    "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema_ASP\\TwonCinema\\TwonCinema\\TwonCinema.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema\\TwonCinema\\TwonCinema\\TwonCinema.csproj",
+        "projectUniqueName": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema_ASP\\TwonCinema\\TwonCinema\\TwonCinema.csproj",
         "projectName": "TwonCinema",
-        "projectPath": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema\\TwonCinema\\TwonCinema\\TwonCinema.csproj",
+        "projectPath": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema_ASP\\TwonCinema\\TwonCinema\\TwonCinema.csproj",
         "packagesPath": "C:\\Users\\Nhat-Minh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema\\TwonCinema\\TwonCinema\\obj\\",
+        "outputPath": "C:\\Users\\Nhat-Minh\\Desktop\\TwonCinema_ASP\\TwonCinema\\TwonCinema\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Nhat-Minh\\AppData\\Roaming\\NuGet\\NuGet.Config",

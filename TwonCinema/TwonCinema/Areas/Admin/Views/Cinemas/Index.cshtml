@@ -1,37 +1,35 @@
 ﻿@model IEnumerable<TwonCinema.Areas.Admin.Models.Cinema>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh Sách Rạp";
 }
-
-<h1>Index</h1>
-
+<center>
+    <h1>Danh Sách Rạp</h1>
+</center>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Tên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Địa Chỉ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Hotline)
+               Quản Lí
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Staf)
+                Trạng Thái
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
@@ -40,20 +38,24 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Hotline)
+                @Html.DisplayFor(modelItem => item.Staf.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @if (item.Status == 1)
+                {
+                    <a asp-action="UnActive" asp-route-id="@item.ID"><label class="fa fa-unlock-alt"></label></a>
+                }
+                else if (item.Status == 0)
+                {
+                    <a asp-action="Active" asp-route-id="@item.ID"><label class="fa fa-lock"></label></a>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Staf.Email)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -55,11 +57,21 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Email,Password,Avatar,Phone,Address,Status")] Staf staf)
+        public async Task<IActionResult> Create([Bind("ID,Name,Email,Password,Avatar,Phone,Address,Status")] Staf staf, IFormFile ful)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(staf);
+                await _context.SaveChangesAsync();
+                var tenImg = staf.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Staf", tenImg);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await ful.CopyToAsync(stream);
+
+                }
+                staf.Avatar = tenImg;
+                _context.Update(staf);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -87,17 +99,28 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Password,Avatar,Phone,Address,Status")] Staf staf)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Password,Avatar,Phone,Address,Status")] Staf staf,IFormFile ful)
         {
             if (id != staf.ID)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
+                    if (ful != null)
+                    {
+                        var tenImg = staf.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Staf", staf.Avatar);
+                        System.IO.File.Delete(path);
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Staf", tenImg);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await ful.CopyToAsync(stream);
+                        }
+                        staf.Avatar = tenImg;
+                    }
                     _context.Update(staf);
                     await _context.SaveChangesAsync();
                 }
@@ -149,6 +172,45 @@ namespace TwonCinema.Areas.Admin.Controllers
         private bool StafExists(int id)
         {
             return _context.Stafs.Any(e => e.ID == id);
+        }
+        public async Task<IActionResult> Active(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var staf = await _context.Stafs
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (staf == null)
+            {
+                return NotFound();
+            }
+            staf.Status = 1;
+            _context.Stafs.Update(staf);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> UnActive(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var staf = await _context.Stafs
+                .FirstOrDefaultAsync(m => m.ID == id);
+            if (staf == null)
+            {
+                return NotFound();
+            }
+            staf.Status = 0;
+            _context.Stafs.Update(staf);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

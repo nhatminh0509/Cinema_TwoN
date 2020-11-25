@@ -20,6 +20,6 @@ namespace TwonCinema.Areas.Admin.Models
         [ForeignKey("Cinema_ID")]
 
         public virtual Cinema Cinema { get; set; }
-        public ICollection<Materials> listMaterials { get; set; }
+        public ICollection<Equipment> listMaterials { get; set; }
     }
 }

@@ -16,8 +16,8 @@ namespace TwonCinema.Areas.Admin.Data
         public DbSet<Staf> Stafs { get; set; }
         public DbSet<Cinema> Cinemas { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<Category_Materials> Category_Materials { get; set; }
-        public DbSet<Materials> Materials { get; set; }
+        public DbSet<Category_Equipment> Category_Equipment { get; set; }
+        public DbSet<Equipment> Equipment { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Movie_Show> Movie_Shows { get; set; }
 

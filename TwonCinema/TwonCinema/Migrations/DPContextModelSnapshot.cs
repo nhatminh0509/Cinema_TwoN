@@ -19,7 +19,7 @@ namespace TwonCinema.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.0");
 
-            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Materials", b =>
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Equipment", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -53,7 +53,7 @@ namespace TwonCinema.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Category_Materials");
+                    b.ToTable("Category_Equipment");
                 });
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Cinema", b =>
@@ -88,7 +88,7 @@ namespace TwonCinema.Migrations
                     b.ToTable("Cinemas");
                 });
 
-            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Materials", b =>
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Equipment", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -120,7 +120,7 @@ namespace TwonCinema.Migrations
 
                     b.HasIndex("Seat_Level_ID");
 
-                    b.ToTable("Materials");
+                    b.ToTable("Equipment");
                 });
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Movie", b =>
@@ -281,7 +281,7 @@ namespace TwonCinema.Migrations
                     b.Navigation("Staf");
                 });
 
-            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Materials", b =>
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Equipment", b =>
                 {
                     b.HasOne("TwonCinema.Areas.Admin.Models.Room", "Room")
                         .WithMany("listMaterials")
@@ -289,15 +289,15 @@ namespace TwonCinema.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TwonCinema.Areas.Admin.Models.Category_Materials", "Seat_Level")
-                        .WithMany("listMaterials")
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Category_Equipment", "Category_Equipment")
+                        .WithMany("listEquipment")
                         .HasForeignKey("Seat_Level_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Room");
+                    b.Navigation("Category_Equipment");
 
-                    b.Navigation("Seat_Level");
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Movie_Show", b =>
@@ -330,9 +330,9 @@ namespace TwonCinema.Migrations
                     b.Navigation("Cinema");
                 });
 
-            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Materials", b =>
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Equipment", b =>
                 {
-                    b.Navigation("listMaterials");
+                    b.Navigation("listEquipment");
                 });
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Cinema", b =>

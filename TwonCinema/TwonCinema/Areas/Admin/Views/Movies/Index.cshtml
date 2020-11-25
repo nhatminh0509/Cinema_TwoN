@@ -1,101 +1,62 @@
 ﻿@model IEnumerable<TwonCinema.Areas.Admin.Models.Movie>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh Sách Phim";
 }
 
-<h1>Index</h1>
-
+<center>
+    <h1>Danh Sách Phim</h1>
+</center>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Tên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Image)
+                Ngày Khởi Chiếu
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Trailer)
+                Ngôn Ngữ
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Directors)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cast)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Genre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Release_Date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Running_Time)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Language)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rated)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Desc)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Trạng Thái
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Image)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Trailer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Directors)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cast)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Genre)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Release_Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Running_Time)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Language)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Rated)
+                @if (item.Status == 1)
+                {
+                    <a asp-action="UnActive" asp-route-id="@item.ID"><label class="fa fa-unlock-alt"></label></a>
+                }
+                else if (item.Status == 0)
+                {
+                    <a asp-action="Active" asp-route-id="@item.ID"><label class="fa fa-lock"></label></a>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Desc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
             </td>
         </tr>
-}
+        }
     </tbody>
 </table>

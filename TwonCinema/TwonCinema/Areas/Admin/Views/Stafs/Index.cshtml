@@ -1,37 +1,27 @@
 ﻿@model IEnumerable<TwonCinema.Areas.Admin.Models.Staf>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "DSNV";
 }
 
-<h1>Index</h1>
-
+<center>
+    <h1>Danh Sách Nhân Viên</h1>
+</center>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"class="btn btn-success text-white btn-block" >Thêm Mới</a>
 </p>
-<table class="table">
+<table class="table" style="text-align:center;">
     <thead>
         <tr>
+            <th></th>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                Tên
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Avatar)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Trạng Thái
             </th>
             <th></th>
         </tr>
@@ -40,30 +30,28 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                <img src="~/Uploads/Staf/@item.Avatar" style="width:40px;border-radius:50%;" />
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Password)
+                @if (item.Status == 1)
+                {
+                    <a asp-action="UnActive" asp-route-id="@item.ID"><label class="fa fa-unlock-alt"></label></a>
+                }
+                else if (item.Status == 0)
+                {
+                    <a asp-action="Active" asp-route-id="@item.ID"><label class="fa fa-lock"></label></a>
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Avatar)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
             </td>
         </tr>
 }
