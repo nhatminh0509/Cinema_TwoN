@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
-<table class="table">
+<table class="table" style="text-align:center">
     <thead>
         <tr>
             <th>
@@ -19,7 +19,7 @@
                 Địa Chỉ
             </th>
             <th>
-               Quản Lí
+                Lịch Chiếu
             </th>
             <th>
                 Trạng Thái
@@ -38,16 +38,19 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Staf.Name)
+                <form asp-area="Admin" asp-controller="Movie_Show" asp-action="Index" method="get">
+                    <input type="hidden" name="idCinema" value="@item.ID" />
+                    <button type="submit" class="btn btn-link"><lable class="fa fa-eye"></lable></button>
+                </form>
             </td>
             <td>
                 @if (item.Status == 1)
                 {
-                    <a asp-action="UnActive" asp-route-id="@item.ID"><label class="fa fa-unlock-alt"></label></a>
+                    <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
                 }
                 else if (item.Status == 0)
                 {
-                    <a asp-action="Active" asp-route-id="@item.ID"><label class="fa fa-lock"></label></a>
+                    <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
                 }
             </td>
             <td>
@@ -59,3 +62,27 @@
         }
     </tbody>
 </table>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('button[name =btnStatus]').click(function () {
+            var id = $(this).data('id');
+            var btn = $(this);
+            $.ajax({
+                method: "GET",
+                url: "../API/CinemasAPI/ChangeStatus",
+                data: { 'id': id }
+            })
+                .done(function (msg) {
+                var obj = JSON.parse(msg);
+                if (obj.Status == 0) {
+                    btn.children().removeClass('fa fa-unlock-alt');
+                    btn.children().addClass('fa fa-lock');
+                } else {
+                    btn.children().removeClass('fa fa-lock');
+                    btn.children().addClass('fa fa-unlock-alt');
+                }
+            });
+        });
+    </script>
+}

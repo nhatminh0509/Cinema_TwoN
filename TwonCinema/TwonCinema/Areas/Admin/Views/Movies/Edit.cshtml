@@ -1,89 +1,118 @@
 ﻿@model TwonCinema.Areas.Admin.Models.Movie
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Sửa Phim";
+}
+@{
+    Random random = new Random();
+    int rand = random.Next(1000);
 }
 
-<h1>Edit</h1>
-
-<h4>Movie</h4>
+<center>
+    <h1>Sửa Phim</h1>
+</center>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label class="control-label">Tên:</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Image" class="control-label"></label>
-                <input asp-for="Image" class="form-control" />
-                <span asp-validation-for="Image" class="text-danger"></span>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="ful" name="ful" />
+                <label class="custom-file-label" for="ful">Choose file</label>
             </div>
             <div class="form-group">
-                <label asp-for="Trailer" class="control-label"></label>
+                <img id="imgPre" src="~/Uploads/Movie/@Model.Image?@rand" alt="no image" class="img-thumbnail" style="max-width:300px" />
+                <input type="hidden" asp-for="Image" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Trailer:</label>
                 <input asp-for="Trailer" class="form-control" />
                 <span asp-validation-for="Trailer" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Directors" class="control-label"></label>
+                <label class="control-label">Đạo Diễn:</label>
                 <input asp-for="Directors" class="form-control" />
                 <span asp-validation-for="Directors" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cast" class="control-label"></label>
+                <label class="control-label">Diễn Viên:</label>
                 <input asp-for="Cast" class="form-control" />
                 <span asp-validation-for="Cast" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
+                <label class="control-label">Thể Loại:</label>
                 <input asp-for="Genre" class="form-control" />
                 <span asp-validation-for="Genre" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Release_Date" class="control-label"></label>
-                <input asp-for="Release_Date" class="form-control" />
+                <label class="control-label">Ngày Khởi Chiếu</label>
+                <input asp-for="Release_Date" type="date" class="form-control" />
                 <span asp-validation-for="Release_Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Running_Time" class="control-label"></label>
+                <label class="control-label">Thời Lượng: (phút)</label>
                 <input asp-for="Running_Time" class="form-control" />
                 <span asp-validation-for="Running_Time" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Language" class="control-label"></label>
+                <label class="control-label">Ngôn Ngữ:</label>
                 <input asp-for="Language" class="form-control" />
                 <span asp-validation-for="Language" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Rated" class="control-label"></label>
+                <label class="control-label">Đối Tượng Xem:</label>
                 <input asp-for="Rated" class="form-control" />
                 <span asp-validation-for="Rated" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Desc" class="control-label"></label>
-                <input asp-for="Desc" class="form-control" />
+                <label class="control-label">Mô Tả</label>
+                <textarea asp-for="Desc" class="form-control" id="desc"></textarea>
                 <span asp-validation-for="Desc" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <label class="control-label">Trạng Thái:</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="1">Kích Hoạt</option>
+                    <option value="0">Không Kích Hoạt</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Sửa" class="btn btn-outline-success text-success btn-block" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-success text-success btn-block">Trở Về</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function readURL(input, idImg) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $(idImg).attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+            }
+        }
+
+        $("#ful").change(function () {
+            readURL(this, '#imgPre');
+        });
+
+    </script>
 }

@@ -1,0 +1,94 @@
+﻿@model IEnumerable<TwonCinema.Areas.Admin.Models.Category_Equipment>
+
+@{
+    ViewData["Title"] = "Danh Sách Trang Thiết Bị";
+}
+
+<center>
+    <h1>Danh Sách Trang Thiết Bị</h1>
+</center>
+<p>
+    <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
+</p>
+<table class="table" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Tên
+            </th>
+            <th>
+                Số Chổ
+            </th>
+            <th>
+                Loại
+            </th>
+            <th>
+                Trạng Thái
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Count_Cell)
+            </td>
+            <td>
+                @if (item.Level == 1)
+                {
+                    <p>Ghế</p>
+                }
+                else if (item.Level == 2)
+                {
+                    <p>Màn Hình</p>
+                }
+            </td>
+            <td>
+                @if (item.Status == 1)
+                {
+                    <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
+                }
+                else if (item.Status == 0)
+                {
+                    <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('button[name =btnStatus]').click(function () {
+            var id = $(this).data('id');
+            var btn = $(this);
+            $.ajax({
+                method: "GET",
+                url: "../API/Category_EquipmentAPI/ChangeStatus",
+                data: { 'id': id }
+            })
+                .done(function (msg) {
+                var obj = JSON.parse(msg);
+                if (obj.Status == 0) {
+                    btn.children().removeClass('fa fa-unlock-alt');
+                    btn.children().addClass('fa fa-lock');
+                } else {
+                    btn.children().removeClass('fa fa-lock');
+                    btn.children().addClass('fa fa-unlock-alt');
+                }
+            });
+        });
+    </script>
+}

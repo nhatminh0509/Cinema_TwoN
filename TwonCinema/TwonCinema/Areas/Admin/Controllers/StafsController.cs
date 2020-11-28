@@ -173,44 +173,5 @@ namespace TwonCinema.Areas.Admin.Controllers
         {
             return _context.Stafs.Any(e => e.ID == id);
         }
-        public async Task<IActionResult> Active(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var staf = await _context.Stafs
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (staf == null)
-            {
-                return NotFound();
-            }
-            staf.Status = 1;
-            _context.Stafs.Update(staf);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> UnActive(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var staf = await _context.Stafs
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (staf == null)
-            {
-                return NotFound();
-            }
-            staf.Status = 0;
-            _context.Stafs.Update(staf);
-            await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-        }
     }
 }

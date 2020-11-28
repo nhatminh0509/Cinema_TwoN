@@ -49,7 +49,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Rooms/Create
         public IActionResult Create()
         {
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Address");
+            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name");
             return View();
         }
 
@@ -66,7 +66,7 @@ namespace TwonCinema.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Address", room.Cinema_ID);
+            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name", room.Cinema_ID);
             return View(room);
         }
 
@@ -83,7 +83,7 @@ namespace TwonCinema.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Address", room.Cinema_ID);
+            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name", room.Cinema_ID);
             return View(room);
         }
 
@@ -119,7 +119,7 @@ namespace TwonCinema.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Address", room.Cinema_ID);
+            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name", room.Cinema_ID);
             return View(room);
         }
 

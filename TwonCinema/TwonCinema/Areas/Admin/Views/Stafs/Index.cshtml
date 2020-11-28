@@ -3,12 +3,16 @@
 @{
     ViewData["Title"] = "DSNV";
 }
+@{
+    Random random = new Random();
+    int rand = random.Next(1000);
+}
 
 <center>
     <h1>Danh Sách Nhân Viên</h1>
 </center>
 <p>
-    <a asp-action="Create"class="btn btn-success text-white btn-block" >Thêm Mới</a>
+    <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
 <table class="table" style="text-align:center;">
     <thead>
@@ -27,33 +31,60 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                <img src="~/Uploads/Staf/@item.Avatar" style="width:40px;border-radius:50%;" />
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @if (item.Status == 1)
-                {
-                    <a asp-action="UnActive" asp-route-id="@item.ID"><label class="fa fa-unlock-alt"></label></a>
-                }
-                else if (item.Status == 0)
-                {
-                    <a asp-action="Active" asp-route-id="@item.ID"><label class="fa fa-lock"></label></a>
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/Uploads/Staf/@item.Avatar?@rand" style="width:40px;border-radius:50%;" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
+                    }
+                    else if (item.Status == 0)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('button[name =btnStatus]').click(function () {
+            var id = $(this).data('id');
+            var btn = $(this);
+            $.ajax({
+                method: "GET",
+                url: "../API/StafsAPI/ChangeStatus",
+                data: { 'id': id }
+            })
+                .done(function (msg) {
+                var obj = JSON.parse(msg);
+                if (obj.Status == 0) {
+                    btn.children().removeClass('fa fa-unlock-alt');
+                    btn.children().addClass('fa fa-lock');
+                } else {
+                    btn.children().removeClass('fa fa-lock');
+                    btn.children().addClass('fa fa-unlock-alt');
+                }
+            });
+        });
+    </script>
+}

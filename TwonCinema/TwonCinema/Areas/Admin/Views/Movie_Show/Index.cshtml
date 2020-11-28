@@ -1,0 +1,308 @@
+﻿@model TwonCinema.Areas.Admin.Models.Movie_Show
+
+@{
+    ViewData["Title"] = "Create";
+    string Convert(int tg)
+    {
+        int h = tg / 60;
+        int m = tg % 60;
+
+        return h + ":" + m;
+    }
+}
+
+
+<style type="text/css">
+    div.table-custom {
+        max-height: 500px;
+        overflow: scroll;
+        position: relative;
+    }
+
+    table.table-custom {
+        position: relative;
+        border-collapse: collapse;
+    }
+
+    td.table-custom, th.table-custom {
+        padding: 0.25em;
+    }
+
+    thead.table-custom th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        height: 40px;
+        min-width: 50px;
+        width: auto;
+        background: #000;
+        color: #FFF;
+        text-align: left;
+    }
+
+        thead.table-custom th:first-child {
+            left: 0;
+            z-index: 1;
+        }
+
+    tbody.table-custom th {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        height: 40px;
+        min-width: 100px;
+        background: #FFF;
+        border-right: 1px solid #CCC;
+    }
+</style>
+
+<center>
+    <h2>Lịch Chiếu Của Rạp @ViewBag.Cinema.Name </h2>
+    <h3>Ngày @ViewBag.Date.Day/@ViewBag.Date.Month/@ViewBag.Date.Year</h3>
+</center>
+<br />
+<center>
+    <form asp-area="Admin" asp-controller="Movie_Show" asp-action="Index" method="get">
+        <input type="hidden" name="idCinema" value="@ViewBag.Cinema.ID" />
+        <input type="date" name="date" value="@ViewBag.Date" />
+        <input type="submit" value="Gửi" class="btn btn-outline-secondary" />
+    </form>
+</center>
+<br />
+<div class="table-custom">
+    <table class="table-custom">
+        <thead class="table-custom">
+            <tr>
+                @for (int i = 41; i <= 132; i++)
+                {
+                    if (i == 41)
+                    {
+                        <th class="table-custom"></th>
+                    }
+                    else
+                    {
+                        <th class="table-custom">@Convert(i * 10)</th>
+                    }
+
+                }
+            </tr>
+        </thead>
+        <tbody class="table-custom">
+
+            @for (int i = 0; i < ViewBag.listRoom.Length; i++)
+            {
+                <tr>
+                    @for (int j = 41; j <= 132; j++)
+                    {
+                        if (j == 41)
+                        {
+                            <th class="table-custom"><a asp-area="Admin" asp-controller="Movie_Show" asp-action="ListInRoom" asp-route-id="@ViewBag.listRoom[i].ID">@ViewBag.listRoom[i].Name</a></th>
+                        }
+                        else
+                        {
+                            int total_m = j * 10;
+                            int h = total_m / 60;
+                            int m = total_m % 60;
+                            DateTime Start_Show = new DateTime(ViewBag.Date.Year, ViewBag.Date.Month, ViewBag.Date.Day, h, m, 0);
+                            <td class="table-custom" id="@ViewBag.listRoom[i].ID@j" style="border-top:1px solid;border-bottom:1px solid;"><a href="#" style="display:block;" title="@ViewBag.listRoom[i].Name. Thời gian bắt đầu: @Convert(total_m)" data-col="@j" data-idroom="@ViewBag.listRoom[i].ID" data-start_show="@Start_Show" data-time_start_show="@Start_Show.Day/@Start_Show.Month/@Start_Show.Year  @Convert(total_m)" data-target="#movie_show" data-toggle="modal" class="identifyingClass"><span style="display:block;line-height:40px;opacity:0;">show</span></a></td>
+                        }
+                    }
+                </tr>
+            }
+
+        </tbody>
+    </table>
+</div>
+<br />
+
+
+@foreach (var item in ViewBag.listShow)
+{
+    int i = item.Room_ID;
+    int h = item.Start_Show.Hour;
+    int m = item.Start_Show.Minute;
+    int total_m = h * 60 + m;
+    int j = total_m / 10;
+
+    int cell = item.Movie.Running_Time / 10;
+    if (item.Movie.Running_Time % 10 > 0)
+    {
+        cell = cell + 1;
+    }
+
+    if (cell == 1)
+    {
+        <script> document.getElementById('@i@j').innerHTML ='<a href="/Admin/Movie_Show/Details/@item.ID" style="display:block" ><span style="display:block;line-height:40px;">@item.Movie.Name (@Convert(total_m) -> @Convert(total_m + item.Movie.Running_Time))</span></a>';</script>
+        <script> document.getElementById('@i@j').style = 'background:lightgray;height: 40px;width:auto;text-align: center;border: 2px solid #666262;'; </script>
+    }
+    else
+    {
+        <script> document.getElementById('@i@j').colSpan='@cell'; </script>
+        <script> document.getElementById('@i@j').innerHTML ='<a href="/Admin/Movie_Show/Details/@item.ID" style="display:block" ><span style="display:block;line-height:40px;">@item.Movie.Name (@Convert(total_m) -> @Convert(total_m + item.Movie.Running_Time))</span></a>';</script>
+        <script> document.getElementById('@i@j').style = 'background: lightgray; height: 40px; width: auto; text-align: center; border: 2px solid #666262;'; </script>
+
+        for (int a = 1; a < cell; a++)
+        {
+            j = j + 1;
+            <script> document.getElementById('@i@j').style='display:none;'; </script>
+        }
+    }
+}
+
+<div class="modal fade" id="movie_show" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thêm Lịch Chiếu</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="time_start">Thời gian bắt đầu chiếu:</label>
+                    <input type="text" readonly id="time_start" value="" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Phim:</label>
+                    <select class="form-control" name="Movie_ID" id="select_movie" onchange="Moviechange(this);">
+                        @foreach (var item in ViewBag.listMovie)
+                        {
+                            <option value="@item.ID" data-runningTime="@item.Running_Time">@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-dismiss="modal">Hủy</button>
+                <button type="button" id="btnAdd" class="btn btn-success" onclick="btnAddClick();" disabled>Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script type="text/javascript">
+
+    var idroom;
+    var time_start;
+    var Start_Show;
+    var column;
+    var idMovie;
+
+    var btn = document.getElementById('btnAdd');
+    var select = document.getElementById('select_movie');
+
+    $(document).on("click", ".identifyingClass", function () {
+        column = $(this).data('col');
+        idroom = $(this).data('idroom');
+        Start_Show = $(this).data('start_show');
+        time_start = $(this).data('time_start_show');
+        $(".modal-body #time_start").val(time_start);
+        Moviechange(select);
+    });
+
+    function Moviechange(obj) {
+        idMovie = obj.value;
+        var options = obj.children;
+        var runningTime;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                runningTime = options[i].getAttribute("data-runningTime");
+            }
+        }
+        var col = column;
+        var cell = runningTime / 10;
+        if (runningTime % 10 > 0) {
+            cell = cell + 1;
+        }
+        if (col > (132 - cell + 1)) {
+            btn.disabled = true;
+            return 0;
+        }
+        $.ajax({
+            method: "GET",
+            url: "../API/Movie_ShowAPI/ListInRoom",
+            data: {
+                'id': idroom,
+                'date': Start_Show,
+            }
+        })
+        .done(function (msg) {
+            var obj = JSON.parse(msg);
+            var t = "";
+            for (var x in obj) {
+
+                col = column;
+                for (var i = 1; i <= cell; i++)
+                {
+                    if (col == (ConvertToMinute(obj[x].h_start, obj[x].m_start) / 10)) {
+                        btn.disabled = true;
+                        return 0;
+                    }
+                    col++;
+                }
+            }
+        });
+        btn.disabled = false;
+        return 0;
+    }
+
+    function btnAddClick()
+    {
+        var movie_show = { Start_Show: Start_Show, Room_ID: idroom, Status: "1", Movie_ID: idMovie };
+        $.ajax({
+            type: "GET",
+            url: "../API/Movie_ShowAPI/Create",
+            data: {
+                Start_Show: Start_Show,
+                Room_ID: idroom,
+                Status: 1,
+                Movie_ID: idMovie
+            },
+            success: function (response) {
+                var obj = JSON.parse(response);
+
+                var i = obj.Room_ID;
+                var total_m = obj.h_start * 60 + obj.m_start;
+                var j = total_m / 10;
+
+                var cell = obj.runningTime / 10;
+                if (obj.runningTime % 10 > 0)
+                {
+                    cell = cell + 1;
+                }
+
+                if (cell == 1) {
+                    document.getElementById(i + '' + j).innerHTML = '<a href="/Admin/Movie_Show/Details/' + obj.id + '" style="display:block"><span style="display:block;line-height:40px;">' + obj.movieName + ' (' + ConvertToTime(total_m) + '->' + ConvertToTime(total_m + obj.runningTime)+')</span></a>';
+                    document.getElementById(i + '' + j).style = 'background:lightgray;height: 40px;width:auto;text-align: center;border: 2px solid #666262;';
+                }
+                else {
+                    document.getElementById(i + '' + j).colSpan = cell;
+                    document.getElementById(i + '' + j).innerHTML = '<a href="/Admin/Movie_Show/Details/' + obj.id + '" style="display:block"><span style="display:block;line-height:40px;">' + obj.movieName + ' (' + ConvertToTime(total_m) + '->' + ConvertToTime(total_m + obj.runningTime) + ')</span></a>';
+                    document.getElementById(i + '' + j).style = 'background: lightgray; height: 40px; width: auto; text-align: center; border: 2px solid #666262;';
+
+                    for (var a = 1; a < cell; a++) {
+                        j = j + 1;
+                        document.getElementById(i + '' + j).style = 'display:none;';
+                    }
+                }
+                var btnClose = document.getElementById('btnClose');
+                btnClose.click();
+            },
+        })
+    }
+
+    function ConvertToTime(total_m) {
+        var h = total_m / 60;
+        var m = total_m % 60;
+        return parseInt(h) + ":" + m;
+    }
+    function ConvertToMinute(h, m) {
+        var total_m = h * 60 + m;
+        return total_m;
+    }
+</script>
+}

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -55,11 +57,20 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Image,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie)
+        public async Task<IActionResult> Create([Bind("ID,Name,Image,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
+                await _context.SaveChangesAsync();
+                var tenImg = movie.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg);
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await ful.CopyToAsync(stream);
+                }
+                movie.Image = tenImg;
+                _context.Update(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -87,7 +98,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Image,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Image,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful)
         {
             if (id != movie.ID)
             {
@@ -98,6 +109,18 @@ namespace TwonCinema.Areas.Admin.Controllers
             {
                 try
                 {
+                    if (ful != null)
+                    {
+                        var tenImg = movie.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", movie.Image);
+                        System.IO.File.Delete(path);
+                        path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg);
+                        using (var stream = new FileStream(path, FileMode.Create))
+                        {
+                            await ful.CopyToAsync(stream);
+                        }
+                        movie.Image = tenImg;
+                    }
                     _context.Update(movie);
                     await _context.SaveChangesAsync();
                 }

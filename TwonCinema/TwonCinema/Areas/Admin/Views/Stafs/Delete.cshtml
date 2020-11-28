@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Xóa NV";
 }
+@{
+    Random random = new Random();
+    int rand = random.Next(1000);
+}
 
 <center>
     <h1>Xóa Nhân Viên</h1>
@@ -11,42 +15,42 @@
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Tên:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Email:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Avatar:
         </dt>
-        <dd class = "col-sm-10">
-            <img src="~/Uploads/Staf/@Model.Avatar" style="width:200px;" />
+        <dd class="col-sm-10">
+            <img src="~/Uploads/Staf/@Model.Avatar?@rand" style="width:200px;" />
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Số Điện Thoại:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Phone)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Địa Chỉ:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Address)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             Trạng Thái:
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @if (Model.Status == 1)
-            { 
+            {
                 <p>Kích Hoạt</p>
             }
             else
@@ -55,10 +59,10 @@
             }
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Xóa" class="btn btn-outline-danger text-danger btn-block" /> <br/>
+        <input type="submit" value="Xóa" class="btn btn-outline-danger text-danger btn-block" /> <br />
         <a asp-action="Index" class="btn btn-outline-success text-success btn-block">Trở Về</a>
     </form>
 </div>

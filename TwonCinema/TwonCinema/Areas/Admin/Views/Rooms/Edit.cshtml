@@ -1,58 +1,61 @@
 ﻿@model TwonCinema.Areas.Admin.Models.Room
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Sửa Phòng";
 }
 
-<h1>Edit</h1>
-
-<h4>Room</h4>
+<center>
+    <h1>Sửa Phòng</h1>
+</center>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div class="col-md">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="ID" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label class="control-label">Tên:</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Capacity" class="control-label"></label>
+                <label class="control-label">Sức Chứa:</label>
                 <input asp-for="Capacity" class="form-control" />
                 <span asp-validation-for="Capacity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Length" class="control-label"></label>
+                <label class="control-label">Chiều Dài:</label>
                 <input asp-for="Length" class="form-control" />
                 <span asp-validation-for="Length" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Width" class="control-label"></label>
+                <label class="control-label">Chiều Rộng:</label>
                 <input asp-for="Width" class="form-control" />
                 <span asp-validation-for="Width" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <label class="control-label">Rạp:</label>
+                <select asp-for="Cinema_ID" class="form-control" asp-items="ViewBag.Cinema_ID"></select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Trạng Thái:</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="1">Kích Hoạt</option>
+                    <option value="0">Không Kích Hoạt</option>
+                </select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Cinema_ID" class="control-label"></label>
-                <select asp-for="Cinema_ID" class="form-control" asp-items="ViewBag.Cinema_ID"></select>
-                <span asp-validation-for="Cinema_ID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Sửa" class="btn btn-outline-success text-success btn-block" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index" class="btn btn-outline-success text-success btn-block">Trở Về</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

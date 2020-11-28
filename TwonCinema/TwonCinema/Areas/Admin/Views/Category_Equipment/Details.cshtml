@@ -1,0 +1,84 @@
+﻿@model TwonCinema.Areas.Admin.Models.Category_Equipment
+
+@{
+    ViewData["Title"] = "Chi Tiết Trang Thiết Bị";
+}
+@{ 
+    Random random = new Random();
+    int rand = random.Next(1000);
+}
+
+<center>
+    <h1>Chi Tiết Trang Thiết Bị</h1>
+</center>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tên:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Hình Ảnh:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/Uploads/Category_Equipment/@Model.Image?@rand" style="max-height:30px" />
+        </dd>
+        <dt class="col-sm-2">
+            Hình Ảnh Khi Đang Được Chọn:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/Uploads/Category_Equipment/@Model.Image_Selected?@rand"style="max-height:30px" />
+        </dd>
+        <dt class="col-sm-2">
+            Hình Ảnh Khi Đã Được Chọn:
+        </dt>
+        <dd class="col-sm-10">
+            <img src="~/Uploads/Category_Equipment/@Model.Image_Checked?@rand" style="max-height:30px" />
+        </dd>
+        <dt class="col-sm-2">
+            Số Chổ:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Count_Cell)
+        </dd>
+        <dt class="col-sm-2">
+            Giá:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-2">
+            Loại Trang Thiết Bị:
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Level == 1)
+            {
+                <p>Ghế</p>
+            }
+            else if (Model.Level == 2)
+            {
+                <p>Màn Hình</p>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Status == 1)
+            {
+                <p>Kích Hoạt</p>
+            }
+            else
+            {
+                <p>Không Kích Hoạt</p>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-outline-warning text-warning btn-block">Sửa</a> <br />
+    <a asp-action="Index" class="btn btn-outline-success text-success btn-block">Trở Về</a>
+</div>
