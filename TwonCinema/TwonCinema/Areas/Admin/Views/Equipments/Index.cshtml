@@ -1,0 +1,327 @@
+﻿@model TwonCinema.Areas.Admin.Models.Equipment
+
+@{
+    ViewData["Title"] = "Index";
+    string[] ChuCai = { "", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "AA", "AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AO", "AP", "AQ", "AR", "AS", "AT", "AU", "AV", "AW", "AX", "AY", "AZ", "BA", "BB", "BC", "BD", "BE", "BF", "BG", "BH", "BI", "BJ", "BK", "BL", "BM", "BN", "BO", "BP", "BQ", "BR", "BS", "BT", "BU", "BV", "BW", "BX", "BY", "BZ" };
+}
+
+<style type="text/css">
+    div.table-custom {
+        height: 550px;
+        overflow: scroll;
+        position: relative;
+    }
+
+    table.table-custom {
+        position: relative;
+        border-collapse: collapse;
+    }
+
+    td.table-custom, th.table-custom {
+        padding: 0.25em;
+    }
+
+    thead.table-custom th {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        height: 40px;
+        min-width: 50px;
+        width: auto;
+        background: #000;
+        color: #FFF;
+        text-align: center;
+    }
+
+        thead.table-custom th:first-child {
+            left: 0;
+            z-index: 1;
+        }
+
+    tbody.table-custom th {
+        position: -webkit-sticky;
+        position: sticky;
+        left: 0;
+        text-align: center;
+        height: 40px;
+        min-width: 50px;
+        background: #FFF;
+        border-right: 1px solid #CCC;
+    }
+</style>
+
+
+<center>
+    <h2>Sơ Đồ Của @ViewBag.Room.Name </h2>
+</center>
+<br />
+<center>
+    <div class="table-custom">
+        <table class="table-custom">
+            <thead class="table-custom">
+                <tr>
+                    @for (int i = 0; i <= ViewBag.Room.Width; i++)
+                    {
+                        if (i == 0)
+                        {
+                            <th class="table-custom"></th>
+                        }
+                        else
+                        {
+                            <th class="table-custom">@i</th>
+                        }
+                    }
+                </tr>
+            </thead>
+            <tbody class="table-custom">
+                @for (int i = 1; i <= ViewBag.Room.Length; i++)
+                {
+                    <tr>
+                        @for (int j = 0; j <= ViewBag.Room.Width; j++)
+                        {
+                            if (j == 0)
+                            {
+                                <th class="table-custom">@ChuCai[i]</th>
+                            }
+                            else
+                            {
+                                <td style="height: auto;text-align: center;border: 2px solid #002447;" id="@i@j" colspan="1">
+                                    <a href="#" data-idroom="@ViewBag.Room.ID" data-row="@i" data-col="@j" data-target="#equipment" data-toggle="modal" class="identifyingClass"><label class="fa fa-plus"></label></a>
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</center>
+<br />
+
+
+@foreach (var item in ViewBag.listEquipment)
+{
+    int row = item.Row_ID;
+    int col = item.Col_ID;
+
+    <script> document.getElementById('@row@col').colSpan='@item.Category_Equipment.Count_Cell'; </script>
+    <script> document.getElementById('@row@col').innerHTML ='<a href="/Admin/Equipments/Details/@item.ID" style="display:block">@item.Name</a>';</script>
+    if (item.Category_Equipment.Level == 1)
+    {
+        <script> document.getElementById('@row@col').style = 'background:#26c6da; height: auto;text-align: center;border: 2px solid #002447;'; </script>
+    }
+    else
+    {
+        <script> document.getElementById('@row@col').style = 'background:#e3d318; height: auto;text-align: center;border: 2px solid #002447;'; </script>
+    }
+
+    for (int i = 1; i < item.Category_Equipment.Count_Cell; i++)
+    {
+        col = col + 1;
+        <script> document.getElementById('@row@col').style='display:none;'; </script>
+    }
+}
+
+<div class="modal fade" id="equipment" tabindex="-1" role="dialog" aria-labelledby="my_modalLabel">
+
+    <div class="modal-dialog" role="dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="btnClose" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Thêm Ghế</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Tên:</label>
+                    <input type="text" name="Name" id="txtName" class="form-control" />
+                    <span id="error" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Loại Ghế:</label>
+                    <select class="form-control" id="select_level" onchange="Levelchange(this);" name="Equipment_Level_ID">
+                        @foreach (var item in ViewBag.listCategory_Equipment)
+                        {
+                            <option value="@item.ID" data-countcell="@item.Count_Cell">@item.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary" onclick="btnAddClick();" id="btnAdd">Thêm</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+    var idroom;
+    var row;
+    var col;
+    var idLevel;
+
+    var btn = document.getElementById('btnAdd');
+    var select = document.getElementById('select_level');
+
+
+    $(document).on("click", ".identifyingClass", function () {
+        idroom = $(this).data('idroom');
+        row = $(this).data('row');
+        col = $(this).data('col');
+        Levelchange(select);
+    });
+
+    function Levelchange(obj) {
+        idLevel = obj.value;
+        var options = obj.children;
+        var cell;
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].selected) {
+                cell = options[i].getAttribute("data-countcell");
+            }
+        }
+        var column = col;
+        if (column > (@ViewBag.Room.Width - cell + 1)) {
+            btn.disabled = true;
+            return 0;
+        }
+
+        $.ajax({
+            method: "GET",
+            url: "../../../API/EquipmentsAPI/ListInRow",
+            data: {
+                'id': idroom,
+                'row': row,
+            }
+        })
+        .done(function (msg) {
+            var obj = JSON.parse(msg);
+            for (var x in obj) {
+                column = col;
+                for (var i = 1; i <= cell; i++) {
+                    if (column == obj[x].Col_ID) {
+                        btn.disabled = true;
+                        return 0;
+                    }
+                    column++;
+                }
+            }
+        });
+        btn.disabled = false;
+        return 0;
+    }
+
+    function btnAddClick() {
+        var txtname = document.getElementById('txtName');
+        var name = txtname.value;
+        var error = document.getElementById('error');
+        if (name == "") {
+            error.innerText = "Tên Không Được Bỏ Trống";
+            return 0;
+        }
+        else {
+            error.innerText = "";
+        }
+        $.ajax({
+            type: "GET",
+            url: "../../../API/EquipmentsAPI/Create",
+            data: {
+                Name: name,
+                Row_ID: row,
+                Col_ID: col,
+                Room_ID: idroom,
+                Equipment_Level_ID: idLevel
+            },
+            success: function (response) {
+                var obj = JSON.parse(response);
+
+                var row = obj.Row_ID;
+                var col = obj.Col_ID;
+                document.getElementById(row + '' + col).colSpan=obj.Count_Cell;
+                document.getElementById(row + '' + col).innerHTML = '<a href="/Admin/Equipments/Details/' + obj.ID + '" style="display:block">' + obj.Name + '</a>';
+                if (obj.Level_Equipment == 1)
+                {
+                    document.getElementById(row + '' + col).style = 'background:#26c6da;height: auto;text-align: center;border: 2px solid #002447;';
+                }
+                else
+                {
+                    document.getElementById(row + '' + col).style = 'background:#e3d318;height: auto;text-align: center;border: 2px solid #002447;';
+                }
+                for (var i = 1; i < obj.Count_Cell; i++)
+                {
+                    col = col + 1;
+                    document.getElementById(row + '' + col).style='display:none;';
+                }
+                var btnClose = document.getElementById('btnClose');
+                txtname.value = "";
+                btnClose.click();
+            },
+        })
+    }
+</script>
+
+
+
+@*<h1>Index</h1>
+
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Row_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Col_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Room)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category_Equipment)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Row_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Col_ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category_Equipment.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>*@

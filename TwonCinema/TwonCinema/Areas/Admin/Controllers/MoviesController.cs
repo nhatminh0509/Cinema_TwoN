@@ -57,19 +57,35 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Image,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful)
+        public async Task<IActionResult> Create([Bind("ID,Name,Image_1,Image_2,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful, IFormFile ful_2)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
                 await _context.SaveChangesAsync();
-                var tenImg = movie.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg);
-                using (var stream = new FileStream(path, FileMode.Create))
+                if (ful != null)
                 {
-                    await ful.CopyToAsync(stream);
+                   
+                    var tenImg = movie.ID + "_1." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg);
+                    using (var stream = new FileStream(path, FileMode.Create))
+                    {
+                        await ful.CopyToAsync(stream);
+                    }
+                    movie.Image_1 = tenImg;
                 }
-                movie.Image = tenImg;
+               
+                if(ful_2 != null)
+                {
+                    var tenImg_2 = movie.ID + "_2." + ful_2.FileName.Split(".")[ful_2.FileName.Split(".").Length - 1];
+                    var path_2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg_2);
+                    using (var stream = new FileStream(path_2, FileMode.Create))
+                    {
+                        await ful_2.CopyToAsync(stream);
+                    }
+                    movie.Image_2 = tenImg_2;
+                }
+
                 _context.Update(movie);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -98,7 +114,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Image,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Image_1,Image_2,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful, IFormFile ful_2)
         {
             if (id != movie.ID)
             {
@@ -111,15 +127,27 @@ namespace TwonCinema.Areas.Admin.Controllers
                 {
                     if (ful != null)
                     {
-                        var tenImg = movie.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
-                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", movie.Image);
+                        var tenImg = movie.ID + "_1." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
+                        var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", movie.Image_1);
                         System.IO.File.Delete(path);
                         path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg);
                         using (var stream = new FileStream(path, FileMode.Create))
                         {
                             await ful.CopyToAsync(stream);
                         }
-                        movie.Image = tenImg;
+                        movie.Image_1 = tenImg;
+                    }
+                    if (ful_2 != null)
+                    {
+                        var tenImg_2 = movie.ID + "_2." + ful_2.FileName.Split(".")[ful_2.FileName.Split(".").Length - 1];
+                        var path_2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", movie.Image_2);
+                        System.IO.File.Delete(path_2);
+                        path_2 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Uploads/Movie", tenImg_2);
+                        using (var stream = new FileStream(path_2, FileMode.Create))
+                        {
+                            await ful_2.CopyToAsync(stream);
+                        }
+                        movie.Image_2 = tenImg_2;
                     }
                     _context.Update(movie);
                     await _context.SaveChangesAsync();

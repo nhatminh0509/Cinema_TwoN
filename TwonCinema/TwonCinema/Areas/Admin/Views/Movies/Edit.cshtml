@@ -27,9 +27,19 @@
                 <label class="custom-file-label" for="ful">Choose file</label>
             </div>
             <div class="form-group">
-                <img id="imgPre" src="~/Uploads/Movie/@Model.Image?@rand" alt="no image" class="img-thumbnail" style="max-width:300px" />
-                <input type="hidden" asp-for="Image" />
+                <img id="imgPre" src="~/Uploads/Movie/@Model.Image_1?@rand" alt="no image" class="img-thumbnail" style="max-width:300px" />
+                <input type="hidden" asp-for="Image_1" />
             </div>
+
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="ful_2" name="ful_2" />
+                <label class="custom-file-label" for="ful_2">Choose file</label>
+            </div>
+            <div class="form-group">
+                <img id="imgPre_2" src="~/Uploads/Movie/@Model.Image_2?@rand" alt="no image" class="img-thumbnail" style="max-width:300px" />
+                <input type="hidden" asp-for="Image_2" />
+            </div>
+
             <div class="form-group">
                 <label class="control-label">Trailer:</label>
                 <input asp-for="Trailer" class="form-control" />
@@ -112,6 +122,10 @@
 
         $("#ful").change(function () {
             readURL(this, '#imgPre');
+        });
+
+        $("#ful_2").change(function () {
+            readURL(this, '#imgPre_2');
         });
 
     </script>

@@ -10,8 +10,8 @@ using TwonCinema.Areas.Admin.Data;
 namespace TwonCinema.Migrations
 {
     [DbContext(typeof(DPContext))]
-    [Migration("20201125045527_CreateDB_TWonCinema")]
-    partial class CreateDB_TWonCinema
+    [Migration("20210102142530_Create_TwoN_DB")]
+    partial class Create_TwoN_DB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace TwonCinema.Migrations
             modelBuilder
                 .UseIdentityColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.0");
+                .HasAnnotation("ProductVersion", "5.0.1");
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Equipment", b =>
                 {
@@ -100,6 +100,9 @@ namespace TwonCinema.Migrations
                     b.Property<int>("Col_ID")
                         .HasColumnType("int");
 
+                    b.Property<int>("Equipment_Level_ID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -110,19 +113,16 @@ namespace TwonCinema.Migrations
                     b.Property<int>("Row_ID")
                         .HasColumnType("int");
 
-                    b.Property<int>("Seat_Level_ID")
-                        .HasColumnType("int");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("Equipment_Level_ID");
+
                     b.HasIndex("Room_ID");
 
-                    b.HasIndex("Seat_Level_ID");
-
-                    b.ToTable("Equipment");
+                    b.ToTable("Equipments");
                 });
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Movie", b =>
@@ -145,7 +145,10 @@ namespace TwonCinema.Migrations
                     b.Property<string>("Genre")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("Image_1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Image_2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Language")
@@ -285,15 +288,15 @@ namespace TwonCinema.Migrations
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Equipment", b =>
                 {
-                    b.HasOne("TwonCinema.Areas.Admin.Models.Room", "Room")
-                        .WithMany("listMaterials")
-                        .HasForeignKey("Room_ID")
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Category_Equipment", "Category_Equipment")
+                        .WithMany("listEquipment")
+                        .HasForeignKey("Equipment_Level_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TwonCinema.Areas.Admin.Models.Category_Equipment", "Category_Equipment")
-                        .WithMany("listEquipment")
-                        .HasForeignKey("Seat_Level_ID")
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Room", "Room")
+                        .WithMany("listMaterials")
+                        .HasForeignKey("Room_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

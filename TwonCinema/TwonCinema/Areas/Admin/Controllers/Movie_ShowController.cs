@@ -44,6 +44,7 @@ namespace TwonCinema.Areas.Admin.Controllers
             var movie_Show = await _context.Movie_Shows
                 .Include(m => m.Movie)
                 .Include(m => m.Room)
+                .Include(m=>m.Room.Cinema)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (movie_Show == null)
             {
@@ -122,12 +123,13 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movie_Show/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+
             if (id == null)
             {
                 return NotFound();
             }
 
-            var movie_Show = await _context.Movie_Shows.FindAsync(id);
+            var movie_Show = _context.Movie_Shows.Include(m =>m.Room.Cinema).Where(m=>m.ID.Equals(id)).First();
             if (movie_Show == null)
             {
                 return NotFound();
@@ -144,6 +146,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Start_Show,Status,Room_ID,Movie_ID")] Movie_Show movie_Show)
         {
+            var room = _context.Rooms.Where(m => m.ID.Equals(movie_Show.Room_ID)).First();
             if (id != movie_Show.ID)
             {
                 return NotFound();
@@ -167,7 +170,7 @@ namespace TwonCinema.Areas.Admin.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Admin/Movie_Show?idCinema=" + room.Cinema_ID + "&date=" + movie_Show.Start_Show.Date);
             }
             ViewData["Movie_ID"] = new SelectList(_context.Movies, "ID", "Directors", movie_Show.Movie_ID);
             ViewData["Room_ID"] = new SelectList(_context.Rooms, "ID", "Name", movie_Show.Room_ID);

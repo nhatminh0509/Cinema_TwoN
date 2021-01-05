@@ -129,23 +129,14 @@
     {
         cell = cell + 1;
     }
+    <script> document.getElementById('@i@j').colSpan='@cell'; </script>
+    <script> document.getElementById('@i@j').innerHTML ='<a href="/Admin/Movie_Show/Details/@item.ID" style="display:block" ><span style="display:block;line-height:40px;">@item.Movie.Name (@Convert(total_m) -> @Convert(total_m + item.Movie.Running_Time))</span></a>';</script>
+    <script> document.getElementById('@i@j').style = 'background: lightgray; height: 40px; width: auto; text-align: center; border: 2px solid #666262;'; </script>
 
-    if (cell == 1)
+    for (int a = 1; a < cell; a++)
     {
-        <script> document.getElementById('@i@j').innerHTML ='<a href="/Admin/Movie_Show/Details/@item.ID" style="display:block" ><span style="display:block;line-height:40px;">@item.Movie.Name (@Convert(total_m) -> @Convert(total_m + item.Movie.Running_Time))</span></a>';</script>
-        <script> document.getElementById('@i@j').style = 'background:lightgray;height: 40px;width:auto;text-align: center;border: 2px solid #666262;'; </script>
-    }
-    else
-    {
-        <script> document.getElementById('@i@j').colSpan='@cell'; </script>
-        <script> document.getElementById('@i@j').innerHTML ='<a href="/Admin/Movie_Show/Details/@item.ID" style="display:block" ><span style="display:block;line-height:40px;">@item.Movie.Name (@Convert(total_m) -> @Convert(total_m + item.Movie.Running_Time))</span></a>';</script>
-        <script> document.getElementById('@i@j').style = 'background: lightgray; height: 40px; width: auto; text-align: center; border: 2px solid #666262;'; </script>
-
-        for (int a = 1; a < cell; a++)
-        {
-            j = j + 1;
-            <script> document.getElementById('@i@j').style='display:none;'; </script>
-        }
+        j = j + 1;
+        <script> document.getElementById('@i@j').style='display:none;'; </script>
     }
 }
 
@@ -252,7 +243,7 @@
 
     function btnAddClick()
     {
-        var movie_show = { Start_Show: Start_Show, Room_ID: idroom, Status: "1", Movie_ID: idMovie };
+        //alert('test')
         $.ajax({
             type: "GET",
             url: "../API/Movie_ShowAPI/Create",
@@ -262,7 +253,17 @@
                 Status: 1,
                 Movie_ID: idMovie
             },
+
+            //type: "POST",
+            //url: "../API/Movie_ShowAPI/CreatePost",
+            //data: {
+            //    Start_Show: Start_Show,
+            //    Room_ID: idroom,
+            //    Status: 1,
+            //    Movie_ID: idMovie
+            //},
             success: function (response) {
+               
                 var obj = JSON.parse(response);
 
                 var i = obj.Room_ID;
@@ -275,20 +276,15 @@
                     cell = cell + 1;
                 }
 
-                if (cell == 1) {
-                    document.getElementById(i + '' + j).innerHTML = '<a href="/Admin/Movie_Show/Details/' + obj.id + '" style="display:block"><span style="display:block;line-height:40px;">' + obj.movieName + ' (' + ConvertToTime(total_m) + '->' + ConvertToTime(total_m + obj.runningTime)+')</span></a>';
-                    document.getElementById(i + '' + j).style = 'background:lightgray;height: 40px;width:auto;text-align: center;border: 2px solid #666262;';
-                }
-                else {
-                    document.getElementById(i + '' + j).colSpan = cell;
-                    document.getElementById(i + '' + j).innerHTML = '<a href="/Admin/Movie_Show/Details/' + obj.id + '" style="display:block"><span style="display:block;line-height:40px;">' + obj.movieName + ' (' + ConvertToTime(total_m) + '->' + ConvertToTime(total_m + obj.runningTime) + ')</span></a>';
-                    document.getElementById(i + '' + j).style = 'background: lightgray; height: 40px; width: auto; text-align: center; border: 2px solid #666262;';
+                document.getElementById(i + '' + j).colSpan = cell;
+                document.getElementById(i + '' + j).innerHTML = '<a href="/Admin/Movie_Show/Details/' + obj.id + '" style="display:block"><span style="display:block;line-height:40px;">' + obj.movieName + ' (' + ConvertToTime(total_m) + '->' + ConvertToTime(total_m + obj.runningTime) + ')</span></a>';
+                document.getElementById(i + '' + j).style = 'background: lightgray; height: 40px; width: auto; text-align: center; border: 2px solid #666262;';
 
-                    for (var a = 1; a < cell; a++) {
-                        j = j + 1;
-                        document.getElementById(i + '' + j).style = 'display:none;';
-                    }
+                for (var a = 1; a < cell; a++) {
+                    j = j + 1;
+                    document.getElementById(i + '' + j).style = 'display:none;';
                 }
+                
                 var btnClose = document.getElementById('btnClose');
                 btnClose.click();
             },

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TwonCinema.Migrations
 {
-    public partial class CreateDB_TWonCinema : Migration
+    public partial class Create_TwoN_DB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -34,7 +34,8 @@ namespace TwonCinema.Migrations
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image_1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image_2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Trailer = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Directors = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cast = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -118,7 +119,7 @@ namespace TwonCinema.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Equipment",
+                name: "Equipments",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -128,19 +129,19 @@ namespace TwonCinema.Migrations
                     Col_ID = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     Room_ID = table.Column<int>(type: "int", nullable: false),
-                    Seat_Level_ID = table.Column<int>(type: "int", nullable: false)
+                    Equipment_Level_ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Equipment", x => x.ID);
+                    table.PrimaryKey("PK_Equipments", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Equipment_Category_Equipment_Seat_Level_ID",
-                        column: x => x.Seat_Level_ID,
+                        name: "FK_Equipments_Category_Equipment_Equipment_Level_ID",
+                        column: x => x.Equipment_Level_ID,
                         principalTable: "Category_Equipment",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Equipment_Rooms_Room_ID",
+                        name: "FK_Equipments_Rooms_Room_ID",
                         column: x => x.Room_ID,
                         principalTable: "Rooms",
                         principalColumn: "ID",
@@ -181,14 +182,14 @@ namespace TwonCinema.Migrations
                 column: "Manager_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Equipment_Room_ID",
-                table: "Equipment",
-                column: "Room_ID");
+                name: "IX_Equipments_Equipment_Level_ID",
+                table: "Equipments",
+                column: "Equipment_Level_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Equipment_Seat_Level_ID",
-                table: "Equipment",
-                column: "Seat_Level_ID");
+                name: "IX_Equipments_Room_ID",
+                table: "Equipments",
+                column: "Room_ID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Movie_Shows_Movie_ID",
@@ -209,7 +210,7 @@ namespace TwonCinema.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Equipment");
+                name: "Equipments");
 
             migrationBuilder.DropTable(
                 name: "Movie_Shows");

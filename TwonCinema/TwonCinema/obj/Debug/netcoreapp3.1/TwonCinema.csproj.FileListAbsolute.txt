@@ -195,7 +195,6 @@ C:\Users\Nhat-Minh\Desktop\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp
 C:\Users\Nhat-Minh\Desktop\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Category_Materials\Index.cshtml.g.cs
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\appsettings.Development.json
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\appsettings.json
-C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\TwonCinema.exe
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\TwonCinema.deps.json
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\TwonCinema.runtimeconfig.json
@@ -398,3 +397,18 @@ C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcor
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Movie_Show\Edit.cshtml.g.cs
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Movie_Show\Index.cshtml.g.cs
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Movie_Show\ListInRoom.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Equipments\Delete.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Equipments\Details.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Equipments\Edit.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Equipments\Index.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Equipments\ListInCinema.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\scopedcss\bundle\TwonCinema.styles.css
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_FooterPartial.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_HeaderPartial.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_HeadPartial.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_ScriptPartial.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\_ViewStart.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Home\About.cshtml.g.cs

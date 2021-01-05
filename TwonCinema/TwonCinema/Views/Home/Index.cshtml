@@ -1,0 +1,226 @@
+﻿@section CSS {
+    <style>
+        .w3l-main-slider .banner-view {
+            background: url(Uploads/Movie/@ViewBag.Top4[0].Image_1 ) no-repeat center;
+            background-size: cover;
+            min-height: 500px;
+            position: relative;
+            z-index: 0;
+            display: grid;
+            align-items: center;
+            border-radius: 6px;
+            -webkit-border-radius: 6px;
+            -o-border-radius: 6px;
+            -ms-border-radius: 6px;
+            -moz-border-radius: 6px;
+        }
+
+    .w3l-main-slider .banner-top1 {
+        background: url(Uploads/Movie/@ViewBag.Top4[1].Image_1) no-repeat center;
+        background-size: cover;
+    }
+
+        .w3l-main-slider .banner-top2 {
+            background: url(Uploads/Movie/@ViewBag.Top4[2].Image_1 ) no-repeat center;
+            background-size: cover;
+        }
+
+        .w3l-main-slider .banner-top3 {
+            background: url(Uploads/Movie/@ViewBag.Top4[3].Image_1 ) no-repeat center;
+            background-size: cover;
+        }
+    </style>
+}
+
+
+<section class="w3l-main-slider position-relative" id="home">
+    <div class="companies20-content">
+        <div class="owl-one owl-carousel owl-theme">
+            <div class="item">
+                <li>
+                    <div class="slider-info banner-view bg bg2">
+
+                        <div class="banner-info">
+                            <a href="sdsdas">
+                                <h3>@ViewBag.Top4[0].Name</h3>
+                                <p>
+                                    @Html.Raw(ViewBag.Top4[0].Desc)
+                                </p>
+                                <a href="#small-dialog1" class="popup-with-zoom-anim play-view1">
+                                    <span class="video-play-icon">
+                                        <span class="fa fa-play"></span>
+                                    </span>
+                                    <h6>Watch Trailer</h6>
+                                </a>
+                            </a>
+
+                            <div id="small-dialog1" class="zoom-anim-dialog mfp-hide">
+                                @Html.Raw(ViewBag.Top4[0].Trailer)
+                            </div>
+                        </div>
+                        </a>
+                    </div>
+                </li>
+            </div>
+            <div class="item">
+                <li>
+                    <div class="slider-info  banner-view banner-top1 bg bg2">
+                        <div class="banner-info">
+                            <h3>@ViewBag.Top4[1].Name</h3>
+                            <p>
+                                @Html.Raw(ViewBag.Top4[1].Desc)
+                            </p>
+                            <a href="#small-dialog2" class="popup-with-zoom-anim play-view1">
+                                <span class="video-play-icon">
+                                    <span class="fa fa-play"></span>
+                                </span>
+                                <h6>Watch Trailer</h6>
+                            </a>
+
+                            <div id="small-dialog2" class="zoom-anim-dialog mfp-hide">
+                                @Html.Raw(ViewBag.Top4[1].Trailer)
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="item">
+                <li>
+                    <div class="slider-info banner-view banner-top2 bg bg2">
+                        <div class="banner-info">
+                            <h3>@ViewBag.Top4[2].Name</h3>
+                            <p>
+                                @Html.Raw(ViewBag.Top4[2].Desc)
+                            </p>
+                            <a href="#small-dialog3" class="popup-with-zoom-anim play-view1">
+                                <span class="video-play-icon">
+                                    <span class="fa fa-play"></span>
+                                </span>
+                                <h6>Watch Trailer</h6>
+                            </a>
+
+                            <div id="small-dialog3" class="zoom-anim-dialog mfp-hide">
+                                @Html.Raw(ViewBag.Top4[2].Trailer)
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+            <div class="item">
+                <li>
+                    <div class="slider-info banner-view banner-top3 bg bg2">
+                        <div class="banner-info">
+                            <h3>@ViewBag.Top4[3].Name</h3>
+                            <p>
+                                @Html.Raw(ViewBag.Top4[3].Desc)
+                            </p>
+                            <a href="#small-dialog4" class="popup-with-zoom-anim play-view1">
+                                <span class="video-play-icon">
+                                    <span class="fa fa-play"></span>
+                                </span>
+                                <h6>Watch Trailer</h6>
+                            </a>
+
+                            <div id="small-dialog4" class="zoom-anim-dialog mfp-hide">
+                                @Html.Raw(ViewBag.Top4[3].Trailer)
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-3">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Phim Đang Chiếu</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                        <h4><a class="show-title" href="phim-dang-chieu.html">Show all</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="owl-three owl-carousel owl-theme">
+                @foreach (var movie in ViewBag.listMovie)
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16 mb-0">
+                            <a href="genre.html">
+                                <figure>
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                </figure>
+                                <div class="box-content">
+
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span> @movie.Running_Time p
+
+                                        </span>
+
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                                @*<span class="fa fa-play video-icon" aria-hidden="true"></span>*@
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" href="genre.html">@movie.Name</a></h3>
+                        <p>@movie.Desc</p>
+                        <div class="button-center text-center mt-4">
+                            <a href="genre.html" class="btn watch-button">Đặt vé ngay</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-3">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Phim Sắp Chiếu</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                        <h4><a class="show-title" href="phim-sap-chieu.html">Show all</a></h4>
+                    </div>
+                </div>
+            </div>
+            <div class="w3l-populohny-grids">
+
+                @foreach (var movie in ViewBag.Top4)
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16">
+                            <a href="genre.html">
+                                <figure>
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                </figure>
+                                <div class="box-content">
+                                    <h3 class="title">@movie.Name   </h3>
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span> 1 Hr 4min
+
+                                        </span>
+
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                                <span class="fa fa-play video-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>

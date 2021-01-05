@@ -1,0 +1,65 @@
+﻿<footer class="w3l-footer">
+    <section class="footer-inner-main">
+        <div class="footer-hny-grids py-5">
+            <div class="container py-lg-4">
+                <div class="text-txt">
+                    <div class="right-side">
+                        <div class="row footer-links">
+                            <div class="col-md-3 col-sm-6 sub-two-right mt-5">
+                                <h6>Phim</h6>
+                                <ul>
+                                    <li><a href="now-watching.html">Phim Đang Chiếu</a></li>
+                                    <li><a href="#parentHorizontalTab2">Phim Sắp Chiếu</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 col-sm-6 sub-two-right mt-5">
+                                <h6>Sự kiện</h6>
+                                <ul>
+                                    <li><a href="event.html#parentHorizontalTab1">Ưu Đãi</a> </li>
+                                    <li><a href="event.html#parentHorizontalTab2">Bình Luận Phim</a> </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 col-sm-6 sub-two-right mt-5">
+                                <h6>Giới Thiệu</h6>
+                                <ul>
+                                    <li><a href="about.html">Về Chúng Tôi</a></li>
+                                    <li><a href="contact.html">Liên Hệ</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3 col-sm-6 sub-two-right mt-5">
+                                <h6>Nhận Thông Báo</h6>
+                                <form action="#" class="subscribe mb-3" method="post">
+                                    <input type="email" name="email" placeholder="Email của bạn" required="">
+                                    <button><span class="fa fa-envelope-o"></span></button>
+                                </form>
+                                <p>
+                                    Nhập email của bạn và nhận tin tức, cập nhật mới nhất và ưu đãi đặc biệt từ chúng tôi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button onclick="topFunction()" id="movetop" title="Go to top">
+            <span class="fa fa-arrow-up" aria-hidden="true"></span>
+        </button>
+        <script>
+				window.onscroll = function () {
+					scrollFunction()
+				};
+
+				function scrollFunction() {
+					if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+						document.getElementById("movetop").style.display = "block";
+					} else {
+						document.getElementById("movetop").style.display = "none";
+					}
+				}
+				function topFunction() {
+					document.body.scrollTop = 0;
+					document.documentElement.scrollTop = 0;
+				}
+        </script>
+    </section>
+</footer>

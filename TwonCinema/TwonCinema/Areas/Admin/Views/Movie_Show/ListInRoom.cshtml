@@ -1,50 +1,89 @@
 ﻿@model IEnumerable<TwonCinema.Areas.Admin.Models.Movie_Show>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lịch chiếu " + ViewBag.Room.Name;
 }
-
-<h1>Index</h1>
-
+<center>
+    <h1>Lịch Chiếu Thuộc @ViewBag.Room.Name</h1>
+</center>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Start_Show)
+                Thời gian bắt Đầu:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Status)
+                Thời Gian Kết Thúc:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Room)
+                Phim:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie)
+                Phòng:
+            </th>
+            <th>
+                Trạng Thái:
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @item.Start_Show.ToString("dd/MM/yyyy HH:mm")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Room.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Movie.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Start_Show.ToString("dd/MM/yyyy HH:mm")
+                </td>
+                <td>
+                    @item.Start_Show.AddMinutes(item.Movie.Running_Time).ToString("dd/MM/yyyy HH:mm")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Movie.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.Name)
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
+                    }
+                    else if (item.Status == 0)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $('button[name =btnStatus]').click(function () {
+            var id = $(this).data('id');
+            var btn = $(this);
+            $.ajax({
+                method: "GET",
+                url: "../API/Movie_ShowAPI/ChangeStatus",
+                data: { 'id': id }
+            })
+                .done(function (msg) {
+                var obj = JSON.parse(msg);
+                if (obj.Status == 0) {
+                    btn.children().removeClass('fa fa-unlock-alt');
+                    btn.children().addClass('fa fa-lock');
+                } else {
+                    btn.children().removeClass('fa fa-lock');
+                    btn.children().addClass('fa fa-unlock-alt');
+                }
+            });
+        });
+    </script>
+}

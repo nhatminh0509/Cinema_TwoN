@@ -1,0 +1,64 @@
+﻿@model TwonCinema.Areas.Admin.Models.Equipment
+
+@{
+    ViewData["Title"] = "Xóa Trang Thiết Bị";
+}
+<center>
+    <h1>Xóa Trang Thiết Bị</h1>
+</center>
+<h3>Bạn có chắc muốn xóa trang thiết bị này?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Tên:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
+            ID Hàng:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Row_ID)
+        </dd>
+        <dt class="col-sm-2">
+            ID Cột:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Col_ID)
+        </dd>
+
+        <dt class="col-sm-2">
+           Phòng:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Room.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Loại Trạng Thiết Bị
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Category_Equipment.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Trạng Thái
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Status == 1)
+            {
+                <p>Kích Hoạt</p>
+            }
+            else
+            {
+                <p>Không Kích Hoạt</p>
+            }
+        </dd>
+    </dl>
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Xóa" class="btn btn-outline-danger text-danger btn-block" /> <br />
+        <a asp-action="Index" asp-route-id="@Model.Room_ID" class="btn btn-outline-success text-success btn-block">Trở Về</a>
+    </form>
+</div>
+

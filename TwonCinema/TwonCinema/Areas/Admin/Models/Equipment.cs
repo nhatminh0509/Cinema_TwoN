@@ -18,8 +18,8 @@ namespace TwonCinema.Areas.Admin.Models
         [Required(ErrorMessage = "Phòng không được bỏ trống")] public int Room_ID { get; set; }
         [ForeignKey("Room_ID")]
         public virtual Room Room { get; set; }
-        [Required(ErrorMessage = "Cấp bậc ghế không được bỏ trống")] public int Seat_Level_ID { get; set; }
-        [ForeignKey("Seat_Level_ID")]
+        [Required(ErrorMessage = "Cấp bậc ghế không được bỏ trống")] public int Equipment_Level_ID { get; set; }
+        [ForeignKey("Equipment_Level_ID")]
         public virtual Category_Equipment Category_Equipment { get; set; }
     }
 }

@@ -1,0 +1,54 @@
+﻿@model TwonCinema.Areas.Admin.Models.Equipment
+
+@{
+    ViewData["Title"] = "Sửa Trang Thiết Bị";
+}
+
+<center>
+    <h1>Sửa Trang Thiết Bị</h1>
+</center>
+<hr />
+<div class="row">
+    <div class="col-md">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label class="control-label">Tên:</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label  class="control-label">ID Hàng:</label>
+                <input asp-for="Row_ID" readonly class="form-control" />
+                <span asp-validation-for="Row_ID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">ID Cột:</label>
+                <input asp-for="Col_ID" readonly class="form-control" />
+                <span asp-validation-for="Col_ID" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="Room_ID" />
+            <input type="hidden" asp-for="Equipment_Level_ID" />
+            <div class="form-group">
+                <label class="control-label">Trạng Thái:</label>
+                <select asp-for="Status" class="form-control">
+                    <option value="1">Kích Hoạt</option>
+                    <option value="0">Không Kích Hoạt</option>
+                </select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Sửa" class="btn btn-outline-success text-success btn-block" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-id="@Model.Room_ID" class="btn btn-outline-success text-success btn-block">Trở Về</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

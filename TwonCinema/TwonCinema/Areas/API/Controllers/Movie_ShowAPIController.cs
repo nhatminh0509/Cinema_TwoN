@@ -55,6 +55,7 @@ namespace TwonCinema.Areas.API.Controllers
             movieShow.movieName = movie_Show.Movie.Name;
             return JsonConvert.SerializeObject(movieShow);
         }
+
         public string ListInRoom(int id,DateTime date)
         {
             var dPContext = _context.Movie_Shows.Include(m => m.Movie).Where(m => m.Room_ID.Equals(id)).Where(m=>m.Start_Show.Date.Equals(date.Date));
@@ -72,6 +73,18 @@ namespace TwonCinema.Areas.API.Controllers
                 listMovieShow.Add(movieShow);
             }
             return JsonConvert.SerializeObject(listMovieShow);
+        }
+
+        public string ChangeStatus(int id)
+        {
+            var obj = _context.Movie_Shows.FirstOrDefault(m => m.ID == id);
+            if (obj.Status == 1)
+                obj.Status = 0;
+            else
+                obj.Status = 1;
+            _context.Movie_Shows.Update(obj);
+            _context.SaveChanges();
+            return JsonConvert.SerializeObject(obj);
         }
     }
 }

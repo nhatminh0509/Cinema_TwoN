@@ -11,7 +11,8 @@ namespace TwonCinema.Areas.Admin.Models
         [Key]
         public int ID { get; set; }
         [Required(ErrorMessage = "Tên không được bỏ trống")] public string Name { get; set; }
-        public string Image { get; set; }
+        public string Image_1 { get; set; }
+        public string Image_2 { get; set; }
         public string Trailer { get; set; }
         [Required(ErrorMessage = "Đạo diễn không được bỏ trống")] public string Directors { get; set; }
         public string Cast { get; set; }

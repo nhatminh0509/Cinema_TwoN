@@ -60,3 +60,14 @@ button i.fa.fa-unlock-alt {
     font-size: 20px;
     color: green;
 }
+
+button i.fa.fa-eye
+{
+    font-size:20px;
+    color:green;
+}
+
+a label.fa.fa-eye {
+    font-size: 20px;
+    color: green;
+}

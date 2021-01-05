@@ -1,0 +1,16 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    @await Html.PartialAsync("_HeadPartial.cshtml")
+    @RenderSection("CSS", required: false)
+</head>
+<body>
+    @await Html.PartialAsync("_HeaderPartial.cshtml")
+    @RenderBody()
+    @await Html.PartialAsync("_FooterPartial.cshtml")
+    @await Html.PartialAsync("_ScriptPartial.cshtml")
+</body>
+@RenderSection("Scripts", required: false)
+</html>
