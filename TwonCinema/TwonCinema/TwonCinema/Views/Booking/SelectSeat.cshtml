@@ -1,0 +1,247 @@
+﻿@section CSS {
+    @foreach (var cate in ViewBag.listCate)
+    {
+        var w = cate.Count_Cell * 30;
+        if (cate.Level == 1)
+        {
+            <style type="text/css">
+                .ghe@{@cate.ID} {
+                    display: none;
+                }
+
+                .ghe@{@cate.ID} + label {
+                    background: url('../Uploads/Category_Equipment/@cate.Image');
+                    height: 30px;
+                    width: @{@w}px;
+                    display: inline-block;
+                    padding: 0 0 0 0px;
+                }
+
+                .ghe@{@cate.ID}:checked + label {
+                    background: url('../Uploads/Category_Equipment/@cate.Image_Selected');
+                    height: 30px;
+                    width: @{@w}px;
+                    display: inline-block;
+                    padding: 0 0 0 0px;
+                }
+
+                .checked@{@cate.ID} {
+                    background: url('../Uploads/Category_Equipment/@cate.Image_Checked');
+                    height: 30px;
+                    width: @{@w}px;
+                    display: inline-block;
+                    padding: 0 0 0 0px;
+                    margin-bottom: 7px;
+                }
+            </style>
+        }
+
+        else if (cate.Level == 2)
+        {
+            <style>
+                .thietbi@{@cate.ID} {
+                    background: url('../Uploads/Category_Equipment/@cate.Image');
+                    height: 30px;
+                    width: @{@w}px;
+                    display: inline-block;
+                    padding: 0 0 0 0px;
+                    margin-bottom: 7px;
+                }
+            </style>
+        }
+    }
+    <style>
+        div.table-custom {
+            height: 550px;
+            overflow: scroll;
+            position: relative;
+        }
+
+        table.table-custom {
+            position: relative;
+            border-collapse: collapse;
+        }
+    </style>
+}
+
+<div class="w3l-breadcrumbs">
+    <nav id="breadcrumbs" class="breadcrumbs">
+        <div class="container page-wrapper">
+            <a href="index.html">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Đặt vé / Chọn chổ ngồi</span>
+        </div>
+    </nav>
+</div>
+
+<div class="booking" style="margin-top: 10px;">
+    <div class="container">
+        <div class="container" style="background-color: #fff1ce;">
+            <p style="color: #000; font-weight: bold;">
+                @ViewBag.Room.Cinema.Name | @ViewBag.Room.Name | Sức chứa: @ViewBag.Room.Capacity <br>
+                @ViewBag.Show.Start_Show.ToString("dd/MM/yyyy hh:mm") ~ @ViewBag.Show.Start_Show.AddMinutes(ViewBag.Movie.Running_Time).ToString("dd/MM/yyyy hh:mm")
+            </p>
+        </div>
+        <div class="main-content">
+            <div class="ticketbox">
+                <center>
+                    <div class="table-custom">
+                        <table class="table-custom" id="seatsBlock">
+                            <tbody class="table-custom">
+                                @for (int i = 1; i <= ViewBag.Room.Length; i++)
+                                {
+                                    <tr>
+                                        @for (int j = 0; j <= ViewBag.Room.Width; j++)
+                                        {
+                                            <td id="@i@j"><p style="width: 30px; height: 30px;opacity:0;">0</p></td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                </center>
+            </div>
+        </div>
+        <div class="container" style="background-color: #000;">
+            <div class="row">
+                <div class="col-3">
+                    <button class="btn btn-outline-warning btn-block" style="margin:10px 10px 10px 0px;">Trở về</button>
+                </div>
+
+                <div class="col-3">
+                    <p><b>Tên Phim:</b> @ViewBag.Movie.Name</p>
+                </div>
+
+                <div class="col-3">
+                    <p>Ghế Đang Chọn: </p><textarea id="seatsDisplay" style=" border: none;
+						background: transparent;
+						color: white;
+						resize: none;"></textarea>
+                </div>
+                <div class="col-3">
+                    <button onclick="$('#formghe').submit();" class="btn btn-outline-success btn-block" style="margin:10px 10px;">Tiếp tục</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<form style="display: none;" id="formghe">
+    <input id="inputghe" name="ghe[]">
+    <input type="submit">
+</form>
+
+
+@section Scripts {
+    <script>
+        $(document).on("change", ".seat", function () {
+            var allSeatsVals = [];
+
+            $('#seatsBlock :checked').each(function () {
+                allSeatsVals.push($(this).val());
+            });
+            $('#inputghe').val(allSeatsVals);
+            $('#seatsDisplay').val(allSeatsVals);
+        });
+
+    </script>
+
+
+    @foreach (var item in ViewBag.listEquipments)
+    {
+        int row = item.Row_ID;
+        int col = item.Col_ID;
+
+        <script> document.getElementById('@row@col').colSpan='@item.Category_Equipment.Count_Cell'; </script>
+
+        if (item.Category_Equipment.Level == 1)
+        {
+            <script> document.getElementById('@row@col').innerHTML ='<Input type="checkbox" class="seat ghe@{@item.Category_Equipment.ID}" id="ghe@{@item.ID}" value="@item.Name"></Input><label for="ghe@{@item.ID}"></label>';</script>
+        }
+        else if (item.Category_Equipment.Level == 2)
+        {
+        <script> document.getElementById('@row@col').innerHTML ='<span class="thietbi@{@item.Category_Equipment.ID}" id="thietbi@{@item.ID}" ></span>';</script>
+        }
+        for (int i = 1; i < item.Category_Equipment.Count_Cell; i++)
+        {
+            col = col + 1;
+            <script> document.getElementById('@row@col').style='display:none;'; </script>
+        }
+    }
+}
+
+@*<tr>
+        <td></td>
+        <td></td>
+        <td></td>
+
+        <td colspan="15">
+            <span class="screen" id="A3"></span>
+        </td>
+
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+        <td>
+            <Input type="checkbox" class="seat ghe" id="A1" value="A1"></Input><label for="A1"></label>
+        </td>
+    </tr>*@

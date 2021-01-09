@@ -26,7 +26,13 @@ namespace TwonCinema.Controllers
 
         public IActionResult About()
         {
-            
+            var listMovie = _context.Movies.ToList();
+            ViewBag.listMovie = listMovie;
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
             return View();
         }
     }

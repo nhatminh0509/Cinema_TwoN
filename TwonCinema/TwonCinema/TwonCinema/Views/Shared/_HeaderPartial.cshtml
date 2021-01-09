@@ -128,23 +128,10 @@
                                 Phim
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="phim-dang-chieu.html">Phim Đang Chiếu</a>
-                                <a class="dropdown-item" href="phim-sap-chieu.html">Phim Sắp Chiếu</a>
+                                <a class="dropdown-item" asp-controller="Movies" asp-action="NowShowing">Phim Đang Chiếu</a>
+                                <a class="dropdown-item" asp-controller="Movies" asp-action="ComingSoon">Phim Sắp Chiếu</a>
                             </div>
                         </li>
-                        @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: var(--theme-title);">
-                Sự Kiện
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="event.html#parentHorizontalTab1">Ưu Đãi</a>
-                <a class="dropdown-item" href="event.html#parentHorizontalTab2">Đánh Giá Phim</a>
-            </div>
-        </li>*@
-                        @*<li class="nav-item">
-            <a class="nav-link" href="lifestyle.html" style="color: var(--theme-title);">Thành Viên</a>
-        </li>*@
                         <li class="nav-item">
                             <a class="nav-link" href="lifestyle.html" style="color: var(--theme-title);">Hệ Thống Rạp</a>
                         </li>
@@ -153,7 +140,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html" style="color: var(--theme-title);">Liên Hệ</a>
+                            <a class="nav-link" asp-controller="Home" asp-action="Contact" style="color: var(--theme-title);">Liên Hệ</a>
                         </li>
                     </ul>
                     <div class="social-right">

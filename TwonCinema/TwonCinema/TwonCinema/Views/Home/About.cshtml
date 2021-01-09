@@ -1,7 +1,10 @@
-﻿<div class="w3l-breadcrumbs">
+﻿@{ 
+    var today = DateTime.Now;
+}
+<div class="w3l-breadcrumbs">
     <nav id="breadcrumbs" class="breadcrumbs">
         <div class="container page-wrapper">
-            <a href="index.html">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Về Chúng Tôi</span>
+            <a asp-action="Index">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Về Chúng Tôi</span>
         </div>
     </nav>
 </div>
@@ -18,9 +21,6 @@
                     molestiae ad eius accusantium? Nulla dolorem perferendis inventore! posuere cubilia Curae;
                     Nunc non risus in justo convallis feugiat.
                 </p>
-                <!-- <div class="ready-more mt-4">
-                    <a href="#" class="btn read-button">Read More <span class="fa fa-angle-double-right ml-2" aria-hidden="true"></span></a>
-                </div> -->
             </div>
         </div>
 
@@ -65,305 +65,81 @@
 
     </div>
 </div>
-<section class="w3l-team" id="team">
-    <div class="grids-main py-5">
-        <div class="container py-lg-4">
-            <div class="headerhny-title">
-                <h3 class="hny-title">Our Actors</h3>
-            </div>
-            <div class="owl-team owl-carousel owl-theme">
-                <div class="item vhny-grid">
-                    <div class="d-grid team-info">
-                        <div class="column position-relative">
-                            <a href="#url"><img src="~/client-asset/assets/images/a1.jpg" alt="" class="img-fluid rounded team-image" /></a>
-                        </div>
-                        <div class="column text-center">
-                            <h3 class="name-pos"><a href="#url">Dwayne johnson</a></h3>
 
-                            <div class="social">
-                                <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                                <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                                <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <div class="d-grid team-info">
-                            <div class="column position-relative">
-                                <a href="#url"><img src="~/client-asset/assets/images/a2.jpg" alt="" class="img-fluid rounded team-image" /></a>
-                            </div>
-                            <div class="column text-center">
-                                <h3 class="name-pos"><a href="#url">Karen Gillan</a></h3>
-
-                                <div class="social">
-                                    <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                                    <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                                    <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <div class="d-grid team-info">
-                            <div class="column position-relative">
-                                <a href="#url"><img src="~/client-asset/assets/images/a3.jpg" alt="" class="img-fluid rounded team-image" /></a>
-                            </div>
-                            <div class="column text-center">
-                                <h3 class="name-pos"><a href="#url">Chris Hemsworth</a></h3>
-
-                                <div class="social">
-                                    <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                                    <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                                    <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <div class="d-grid team-info">
-                            <div class="column position-relative">
-                                <a href="#url"><img src="~/client-asset/assets/images/a4.jpg" alt="" class="img-fluid rounded team-image" /></a>
-                            </div>
-                            <div class="column text-center">
-                                <h3 class="name-pos"><a href="#url">Elton John</a></h3>
-
-                                <div class="social">
-                                    <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                                    <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                                    <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <div class="d-grid team-info">
-                            <div class="column position-relative">
-                                <a href="#url"><img src="~/client-asset/assets/images/a5.jpg" alt="" class="img-fluid rounded team-image" /></a>
-                            </div>
-                            <div class="column text-center">
-                                <h3 class="name-pos"><a href="#url">Liu Yifei</a></h3>
-                                <div class="social">
-                                    <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                                    <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                                    <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <div class="d-grid team-info">
-                            <div class="column position-relative">
-                                <a href="#url"><img src="~/client-asset/assets/images/a3.jpg" alt="" class="img-fluid rounded team-image" /></a>
-                            </div>
-                            <div class="column text-center">
-                                <h3 class="name-pos"><a href="#url">Chris Hemsworth</a></h3>
-
-                                <div class="social">
-                                    <a href="#facebook" class="facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
-                                    <a href="#twitter" class="twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
-                                    <a href="#linkedin" class="linkedin"><span class="fa fa-linkedin" aria-hidden="true"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 <section class="w3l-grids">
     <div class="grids-main py-5">
-        <div class="container py-lg-4">
+        <div class="container py-lg-3">
             <div class="headerhny-title">
                 <div class="w3l-title-grids">
                     <div class="headerhny-left">
-                        <h3 class="hny-title">New Releases</h3>
+                        <h3 class="hny-title">Phim Đang Chiếu</h3>
                     </div>
                     <div class="headerhny-right text-lg-right">
-                        <h4><a class="show-title" href="genre.html">Show all</a></h4>
+                        <h4><a class="show-title" asp-controller="Movies" asp-action="NowShowing">Hiện tất cả</a></h4>
                     </div>
                 </div>
             </div>
             <div class="owl-three owl-carousel owl-theme">
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <a href="genre.html">
-                            <figure>
-                                <img class="img-fluid" src="~/client-asset/assets/images/m12.jpg" alt="">
-                            </figure>
-                            <div class="box-content">
-                                <h4>
-                                    <span class="post">
-                                        <span class="fa fa-clock-o"> </span> 2 Hr 4min
+                @foreach (var movie in ViewBag.listMovie)
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16 mb-0">
+                            <a asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">
+                                <figure>
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                </figure>
+                                <div class="box-content">
 
-                                    </span>
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span> @movie.Running_Time p
 
-                                    <span class="post fa fa-heart text-right"></span>
-                                </h4>
-                            </div>
-                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
-                        </a>
+                                        </span>
+
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">@movie.Name</a></h3>
+                        @*<p>@Html.Raw(movie.Desc)</p>*@
+                        <div class="button-center text-center mt-4">
+                            <a href="#" data-toggle="modal" data-target="#myModal" data-id_movie="@movie.ID" data-moviename="@movie.Name" data-today="@today" class="datve btn watch-button">Đặt vé ngay</a>
+                        </div>
                     </div>
-                    <h3> <a class="title-gd" href="genre.html">The Hustle</a></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                    <div class="button-center text-center mt-4">
-                        <a href="genre.html" class="btn watch-button">Watch now</a>
-                    </div>
-
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <a href="genre.html">
-                            <figure>
-                                <img class="img-fluid" src="~/client-asset/assets/images/m11.jpg" alt="">
-                            </figure>
-                            <div class="box-content">
-
-                                <h4>
-                                    <span class="post">
-                                        <span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-                                    </span>
-
-                                    <span class="post fa fa-heart text-right"></span>
-                                </h4>
-                            </div>
-                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <h3> <a class="title-gd" href="genre.html">The Lego</a></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                    <div class="button-center text-center mt-4">
-                        <a href="genre.html" class="btn watch-button">Watch now</a>
-                    </div>
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <a href="genre.html">
-                            <figure>
-                                <img class="img-fluid" src="~/client-asset/assets/images/m9.jpg" alt="">
-                            </figure>
-                            <div class="box-content">
-
-                                <h4>
-                                    <span class="post">
-                                        <span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-                                    </span>
-
-                                    <span class="post fa fa-heart text-right"></span>
-                                </h4>
-                            </div>
-                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <h3> <a class="title-gd" href="genre.html">Joker </a></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                    <div class="button-center text-center mt-4">
-                        <a href="genre.html" class="btn watch-button">Watch now</a>
-                    </div>
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <a href="genre.html">
-                            <figure>
-                                <img class="img-fluid" src="~/client-asset/assets/images/m8.jpg" alt="">
-                            </figure>
-                            <div class="box-content">
-
-                                <h4>
-                                    <span class="post">
-                                        <span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-                                    </span>
-
-                                    <span class="post fa fa-heart text-right"></span>
-                                </h4>
-                            </div>
-                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <h3> <a class="title-gd" href="genre.html">Toy story 4</a></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                    <div class="button-center text-center mt-4">
-                        <a href="genre.html" class="btn watch-button">Watch now</a>
-                    </div>
-
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <a href="genre.html">
-                            <figure>
-                                <img class="img-fluid" src="~/client-asset/assets/images/m1.jpg" alt="">
-                            </figure>
-                            <div class="box-content">
-
-                                <h4>
-                                    <span class="post">
-                                        <span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-                                    </span>
-
-                                    <span class="post fa fa-heart text-right"></span>
-                                </h4>
-                            </div>
-                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <h3> <a class="title-gd" href="genre.html">Rocketman</a></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                    <div class="button-center text-center mt-4">
-                        <a href="genre.html" class="btn watch-button">Watch now</a>
-                    </div>
-                </div>
-                <div class="item vhny-grid">
-                    <div class="box16">
-                        <a href="genre.html">
-                            <figure>
-                                <img class="img-fluid" src="~/client-asset/assets/images/m2.jpg" alt="">
-                            </figure>
-                            <div class="box-content">
-
-                                <h4>
-                                    <span class="post">
-                                        <span class="fa fa-clock-o"> </span> 2 Hr 4min
-
-                                    </span>
-
-                                    <span class="post fa fa-heart text-right"></span>
-                                </h4>
-                            </div>
-                            <span class="fa fa-play video-icon" aria-hidden="true"></span>
-                        </a>
-                    </div>
-                    <h3> <a class="title-gd" href="genre.html">Doctor Sleep</a></h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit</p>
-                    <div class="button-center text-center mt-4">
-                        <a href="genre.html" class="btn watch-button">Watch now</a>
-                    </div>
-                </div>
+                }
             </div>
         </div>
 
     </div>
 </section>
 
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-2"><button id="current" data-day="@today" class="selectDay btn-gray">@today.ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(1)" class="selectDay btn-outline-gray">@today.AddDays(1).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(2)" class="selectDay btn-outline-gray">@today.AddDays(2).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(3)" class="selectDay btn-outline-gray">@today.AddDays(3).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(4)" class="selectDay btn-outline-gray">@today.AddDays(4).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(5)" class="selectDay btn-outline-gray">@today.AddDays(5).ToString("dd/MM")</button></div>
+                </div>
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body" style="min-height: 500px;">
+                <b style="color:#df0e62;display:inline;">Phim: </b><p id="moviename" style="color:#df0e62;display:inline;"></p>
+                <div class="modal-body" id="listrap" style="height: 500px;overflow-y:scroll;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script src="~/client-asset/assets/js/jquery.waypoints.min.js"></script>
@@ -371,4 +147,90 @@
     <script>
         $('.counter').countUp();
     </script>
+
+    <script>
+        var idMovie;
+        var day;
+
+        $(document).on("click", ".datve", function () {
+            $('.selectDay').each(function () {
+                $(this).removeClass('btn-gray');
+                $(this).addClass('btn-outline-gray');
+            });
+            $('#current').addClass('btn-gray');
+            $('#current').removeClass('btn-outline-gray');
+            document.getElementById('moviename').innerText = $(this).data('moviename');
+
+            idMovie = $(this).data('id_movie');
+            day = $(this).data('today');
+            listRap(idMovie, day);
+        });
+
+        $(document).on("click", ".selectDay", function () {
+            $('.selectDay').each(function () {
+                $(this).removeClass('btn-gray');
+                $(this).addClass('btn-outline-gray');
+            });
+            $(this).addClass('btn-gray');
+            $(this).removeClass('btn-outline-gray');
+
+            day = $(this).data('day');
+
+            listRap(idMovie, day);
+        });
+
+        function listRap(idMovie, day) {
+            document.getElementById('listrap').innerHTML = '';
+            $.ajax({
+                type: "GET",
+                url: "../../API/Movie_ShowAPI/ListCinemaHaveShowByMovieAndDay",
+                data: {
+                    idMovie: idMovie,
+                    day: day
+                }
+            }).done(function (listID) {
+                var listidrap = JSON.parse(listID);
+                var listRapHTML = [];
+                listidrap.map((id) => {
+                    var elementcinema;
+                    $.ajax({
+                        type: "GET",
+                        url: "../../API/Movie_ShowAPI/ListShowInCinemaByMovieAndDay",
+                        data: {
+                            idCinema: id,
+                            idMovie: idMovie,
+                            day: day
+                        }
+                    }).done(function (listShowRes) {
+                        var listshow = JSON.parse(listShowRes);
+
+                        var listShowHTML = listshow.map((movie_show) => {
+                            return `<li class="time">
+                                                    <a href="../../booking/selectseat?idShow=${movie_show.id}" class="button">${movie_show.h_start}:${movie_show.m_start}</a>
+                                                </li>`;
+                        });
+
+                        $.ajax({
+                            type: "GET",
+                            url: "../../API/CinemasAPI/GetByID",
+                            data: {
+                                id: id,
+                            }
+                        }).done(function (cinemaRes) {
+                            var cinema = JSON.parse(cinemaRes);
+                            elementcinema = `<div class="rap">
+                                                    <b>${cinema.Name}</b>
+                                                    <ul class="listTime">
+                                                        ${listShowHTML.join('')}
+                                                    </ul>
+                                                </div>`;
+                            listRapHTML.push(elementcinema);
+                            document.getElementById('listrap').innerHTML = listRapHTML.join('');
+                        });
+                    });
+                });
+            });
+        }
+    </script>
 }
+

@@ -34,5 +34,12 @@ namespace TwonCinema.Areas.API.Controllers
             _context.SaveChanges();
             return JsonConvert.SerializeObject(obj);
         }
+
+        [HttpGet]
+        public string GetByID(int id)
+        {
+            var obj = _context.Cinemas.FirstOrDefault(m => m.ID == id);
+            return JsonConvert.SerializeObject(obj);
+        }
     }
 }

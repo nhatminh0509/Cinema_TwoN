@@ -86,5 +86,44 @@ namespace TwonCinema.Areas.API.Controllers
             _context.SaveChanges();
             return JsonConvert.SerializeObject(obj);
         }
+
+        public string ListCinemaHaveShowByMovieAndDay(int idMovie, DateTime day)
+        {
+            List<int> listID = new List<int>();
+            var cinemas = _context.Cinemas.Include(m => m.listRoom).ToList();
+            foreach (var cinema in cinemas)
+            {
+                if (cinema.listRoom != null)
+                {
+                    foreach (var room in cinema.listRoom)
+                    {
+                        var movie_shows = _context.Movie_Shows.Where(m => m.Movie_ID.Equals(idMovie)).Where(m => m.Start_Show.Date.Equals(day.Date)).Where(m => m.Room_ID.Equals(room.ID)).Count();
+                        if (movie_shows > 0)
+                        {
+                            listID.Add(cinema.ID);
+                            break;
+                        }
+                    }
+                }
+            }
+            return JsonConvert.SerializeObject(listID.ToArray());
+        }
+
+        public string ListShowInCinemaByMovieAndDay(int idCinema, int idMovie, DateTime day)
+        {
+            List<movieShow> listMovieShow = new List<movieShow>();
+            var movie_shows = _context.Movie_Shows.Include(m => m.Room).Where(m=>m.Room.Cinema_ID.Equals(idCinema)).Where(m => m.Movie_ID.Equals(idMovie)).Where(m => m.Start_Show.Date.Equals(day.Date)).ToList();
+            foreach(var item in movie_shows)
+            {
+                movieShow movieShow = new movieShow();
+                movieShow.id = item.ID;
+                movieShow.Room_ID = item.Room_ID;
+                movieShow.Movie_ID = item.Movie_ID;
+                movieShow.h_start = item.Start_Show.Hour;
+                movieShow.m_start = item.Start_Show.Minute;
+                listMovieShow.Add(movieShow);
+            }
+            return JsonConvert.SerializeObject(listMovieShow);
+        }
     }
 }

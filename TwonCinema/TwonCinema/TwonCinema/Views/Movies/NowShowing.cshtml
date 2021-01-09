@@ -1,0 +1,168 @@
+﻿@{ 
+    var today = DateTime.Now;
+}
+<div class="w3l-breadcrumbs">
+    <nav id="breadcrumbs" class="breadcrumbs">
+        <div class="container page-wrapper">
+            <a asp-controller="Home" asp-action="Index">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Phim Đang Chiếu</span>
+        </div>
+    </nav>
+</div>
+
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-4">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Phim Đang Chiếu</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                    </div>
+                </div>
+            </div>
+            <div class="w3l-populohny-grids">
+                @foreach (var movie in ViewBag.listMovie)
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16 mb-0">
+                            <a asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">
+                                <figure>
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                </figure>
+                                <div class="box-content">
+
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span> @movie.Running_Time p
+                                        </span>
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">@movie.Name</a></h3>
+                        <div class="button-center text-center mt-4">
+                            <a href="#" data-toggle="modal" data-target="#myModal" data-id_movie="@movie.ID" data-moviename="@movie.Name" data-today="@today" class="datve btn watch-button">Đặt vé ngay</a>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-2"><button id="current" data-day="@today" class="selectDay btn-gray">@today.ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(1)" class="selectDay btn-outline-gray">@today.AddDays(1).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(2)" class="selectDay btn-outline-gray">@today.AddDays(2).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(3)" class="selectDay btn-outline-gray">@today.AddDays(3).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(4)" class="selectDay btn-outline-gray">@today.AddDays(4).ToString("dd/MM")</button></div>
+                    <div class="col-2"><button data-day="@today.AddDays(5)" class="selectDay btn-outline-gray">@today.AddDays(5).ToString("dd/MM")</button></div>
+                </div>
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body" style="min-height: 500px;">
+                <b style="color:#df0e62;display:inline;">Phim: </b><p id="moviename" style="color:#df0e62;display:inline;"></p>
+                <div class="modal-body" id="listrap" style="height: 500px;overflow-y:scroll;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        var idMovie;
+        var day;
+
+        $(document).on("click", ".datve", function () {
+            $('.selectDay').each(function () {
+                $(this).removeClass('btn-gray');
+                $(this).addClass('btn-outline-gray');
+            });
+            $('#current').addClass('btn-gray');
+            $('#current').removeClass('btn-outline-gray');
+            document.getElementById('moviename').innerText = $(this).data('moviename');
+
+            idMovie = $(this).data('id_movie');
+            day = $(this).data('today');
+            listRap(idMovie, day);
+        });
+
+        $(document).on("click", ".selectDay", function () {
+            $('.selectDay').each(function () {
+                $(this).removeClass('btn-gray');
+                $(this).addClass('btn-outline-gray');
+            });
+            $(this).addClass('btn-gray');
+            $(this).removeClass('btn-outline-gray');
+
+            day = $(this).data('day');
+
+            listRap(idMovie, day);
+        });
+
+        function listRap(idMovie, day) {
+            document.getElementById('listrap').innerHTML = '';
+            $.ajax({
+                type: "GET",
+                url: "../../API/Movie_ShowAPI/ListCinemaHaveShowByMovieAndDay",
+                data: {
+                    idMovie: idMovie,
+                    day: day
+                }
+            }).done(function (listID) {
+                var listidrap = JSON.parse(listID);
+                var listRapHTML = [];
+                listidrap.map((id) => {
+                    var elementcinema;
+                    $.ajax({
+                        type: "GET",
+                        url: "../../API/Movie_ShowAPI/ListShowInCinemaByMovieAndDay",
+                        data: {
+                            idCinema: id,
+                            idMovie: idMovie,
+                            day: day
+                        }
+                    }).done(function (listShowRes) {
+                        var listshow = JSON.parse(listShowRes);
+
+                        var listShowHTML = listshow.map((movie_show) => {
+                            return `<li class="time">
+                                                    <a href="../../booking/selectseat?idShow=${movie_show.id}" class="button">${movie_show.h_start}:${movie_show.m_start}</a>
+                                                </li>`;
+                        });
+
+                        $.ajax({
+                            type: "GET",
+                            url: "../../API/CinemasAPI/GetByID",
+                            data: {
+                                id: id,
+                            }
+                        }).done(function (cinemaRes) {
+                            var cinema = JSON.parse(cinemaRes);
+                            elementcinema = `<div class="rap">
+                                                    <b>${cinema.Name}</b>
+                                                    <ul class="listTime">
+                                                        ${listShowHTML.join('')}
+                                                    </ul>
+                                                </div>`;
+                            listRapHTML.push(elementcinema);
+                            document.getElementById('listrap').innerHTML = listRapHTML.join('');
+                        });
+                    });
+                });
+            });
+        }
+    </script>
+}

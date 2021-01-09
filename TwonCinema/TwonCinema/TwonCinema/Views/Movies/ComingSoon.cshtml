@@ -1,0 +1,49 @@
+﻿<div class="w3l-breadcrumbs">
+    <nav id="breadcrumbs" class="breadcrumbs">
+        <div class="container page-wrapper">
+            <a asp-controller="Home" asp-action="Index">Trang Chủ</a> » <span class="breadcrumb_last" aria-current="page">Phim Sắp Chiếu</span>
+        </div>
+    </nav>
+</div>
+
+<section class="w3l-grids">
+    <div class="grids-main py-5">
+        <div class="container py-lg-4">
+            <div class="headerhny-title">
+                <div class="w3l-title-grids">
+                    <div class="headerhny-left">
+                        <h3 class="hny-title">Phim Sắp Chiếu</h3>
+                    </div>
+                    <div class="headerhny-right text-lg-right">
+                    </div>
+                </div>
+            </div>
+            <div class="w3l-populohny-grids">
+                @foreach (var movie in ViewBag.listMovie)
+                {
+                    <div class="item vhny-grid">
+                        <div class="box16 mb-0">
+                            <a asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">
+                                <figure>
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                </figure>
+                                <div class="box-content">
+
+                                    <h4>
+                                        <span class="post">
+                                            <span class="fa fa-clock-o"> </span> @movie.Running_Time p
+                                        </span>
+                                        <span class="post fa fa-heart text-right"></span>
+                                    </h4>
+                                </div>
+                            </a>
+                        </div>
+                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">@movie.Name</a></h3>
+                        <p>@movie.Release_Date.ToString("dd/MM/yyyy")</p>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

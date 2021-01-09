@@ -841,3 +841,8 @@ C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\D
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\TwonCinema.dll
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\TwonCinema.pdb
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\TwonCinema.genruntimeconfig.cache
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Home\Contact.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Movies\NowShowing.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Movies\ComingSoon.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Movies\Movie.cshtml.g.cs
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Booking\SelectSeat.cshtml.g.cs
