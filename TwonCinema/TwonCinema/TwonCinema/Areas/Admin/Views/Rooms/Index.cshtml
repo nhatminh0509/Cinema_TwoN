@@ -1,16 +1,42 @@
-﻿@model IEnumerable<TwonCinema.Areas.Admin.Models.Room>
+﻿@model TwonCinema.Areas.Admin.Models.Room
 
 @{
     ViewData["Title"] = "Danh Sách Phòng";
 }
+<style>
+    .active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
 
+    .active-cyan input.form-control[type=text] {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
+
+    .active-cyan .fa, .active-cyan-2 .fa {
+        color: #4dd0e1;
+    }
+</style>
 <center>
     <h1>Danh Sách Phòng</h1>
 </center>
 <p>
-    <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
+    <a data-toggle="modal" data-target="#myCreate" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
-<table class="table" style="text-align:center">
+<form class="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <input class="form-control form-control-sm ml-3 w-75" type="text" id="myInput" placeholder="Search"
+           aria-label="Search">
+</form>
+<form asp-action="Index" method="GET" id="myform" class="form-inline d-flex justify-content-end md-form form-sm active-cyan active-cyan-2 mt-2">
+    <select name="status" onchange="$('#myform').submit();" class="form-control">
+        <option value="1">Lọc</option>
+        <option value="1">Còn sử dụng</option>
+        <option value="0">Ngưng sử dụng</option>
+    </select>
+</form>
+<table class="table" style="text-align:center" id="myTable">
     <thead>
         <tr>
             <th>
@@ -30,17 +56,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in ViewBag.ListRoom)
         {
-        <tr>
+        <tr id="@item.ID">
             <td>
-                @Html.DisplayFor(modelItem => item.Name) (@item.Length x @item.Width)
+                @item.Name (@item.Length x @item.Width)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Capacity)
+                @item.Capacity
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Cinema.Name)
+                @item.Cinema.Name
             </td>
             <td>
                 <a asp-area="Admin" asp-controller="Equipments" asp-action="Index" asp-route-id="@item.ID"><label class="fa fa-eye"></label></a>
@@ -56,17 +82,205 @@
                 }
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
+                <a data-toggle="modal" data-target="#myEdit" data-id="@item.ID" data-name="@item.Name" data-capacity="@item.Capacity" data-length="@item.Length" data-width="@item.Width" data-status="@item.Status" data-cinema_id="@item.Cinema_ID" class="edit"><label class="fa fa-edit"></label> Sửa</a> |
+                <a data-toggle="modal" data-target="#myDetail" data-id="@item.ID" data-name="@item.Name" data-capacity="@item.Capacity" data-length="@item.Length" data-width="@item.Width" data-status="@item.Status" data-cinema="@item.Cinema.Name" class="detail"><label class="fa fa-info"></label> Chi Tiết</a>
             </td>
         </tr>
         }
     </tbody>
 </table>
 
+@*them*@
+<div class="container">
+    <div class="modal fade" id="myCreate" role="dialog">
+        <form asp-action="Create">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="title">Thêm Phòng</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label class="control-label">Tên:</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Sức Chứa:</label>
+                            <input asp-for="Capacity" class="form-control" />
+                            <span asp-validation-for="Capacity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Chiều Dài:</label>
+                            <input asp-for="Length" max="78" class="form-control" />
+                            <span asp-validation-for="Length" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Chiều Rộng:</label>
+                            <input asp-for="Width" max="78" class="form-control" />
+                            <span asp-validation-for="Width" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Rạp:</label>
+                            <select asp-for="Cinema_ID" class="form-control" asp-items="ViewBag.Cinema_ID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Trạng Thái:</label>
+                            <select asp-for="Status" class="form-control">
+                                <option value="1">Kích Hoạt</option>
+                                <option value="0">Không Kích Hoạt</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Thêm" class="btn btn-outline-success text-success " />
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@*sua*@
+<div class="container">
+    <div class="modal fade" id="myEdit" role="dialog">
+        <form asp-action="Edit" method="post">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="title">Sửa Phòng</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input type="hidden" id="inID" asp-for="ID" />
+                        <div class="form-group">
+                            <label class="control-label">Tên:</label>
+                            <input asp-for="Name" id="inTen" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Sức Chứa:</label>
+                            <input asp-for="Capacity" id="inSucChua" class="form-control" />
+                            <span asp-validation-for="Capacity" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Chiều Dài:</label>
+                            <input asp-for="Length" id="inChieuDai" max="78" class="form-control" />
+                            <span asp-validation-for="Length" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Chiều Rộng:</label>
+                            <input asp-for="Width" id="inChieuRong" max="78" class="form-control" />
+                            <span asp-validation-for="Width" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Rạp:</label>
+                            <select asp-for="Cinema_ID" id="inRap" class="form-control" asp-items="ViewBag.Cinema_ID"></select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Trạng Thái:</label>
+                            <select asp-for="Status" id="inTrangThai" class="form-control">
+                                <option value="1">Kích Hoạt</option>
+                                <option value="0">Không Kích Hoạt</option>
+                            </select>
+                            <span asp-validation-for="Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Sửa" class="btn btn-outline-success text-success " />
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@*chi tiet*@
+
+
+<div class="container">
+    <div class="modal fade" id="myDetail" role="dialog">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="title">Chi Tiết Rạp</h4>
+                </div>
+                <div class="modal-body">
+                    <dl class="row">
+                        <dt class="col-sm-5">
+                            Tên:
+                        </dt>
+                        <dd class="col-sm-7" id="lbTen">
+
+                        </dd>
+                        <dt class="col-sm-5">
+                            Sức Chứa:
+                        </dt>
+                        <dd class="col-sm-7" id="lbSucChua">
+
+                        </dd>
+                        <dt class="col-sm-5">
+                            Chiều Dài:
+                        </dt>
+                        <dd class="col-sm-7" id="lbChieuDai">
+
+                        </dd>
+                        <dt class="col-sm-5">
+                            Chiều Rộng:
+                        </dt>
+                        <dd class="col-sm-7" id="lbChieuRong">
+
+                        </dd>
+                        <dt class="col-sm-5">
+                            Rạp:
+                        </dt>
+                        <dd class="col-sm-7" id="lbRap">
+
+                        </dd>
+                        <dt class="col-sm-5">
+                            Trạng Thái:
+                        </dt>
+                        <dd class="col-sm-7" id="lbTrangThai">
+
+                        </dd>
+                    </dl>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" data-dismiss="modal" value="Xóa" class="btn btn-outline-danger delete" />
+                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+
     <script>
         $('button[name =btnStatus]').click(function () {
             var id = $(this).data('id');
@@ -77,14 +291,52 @@
                 data: { 'id': id }
             })
                 .done(function (msg) {
-                var obj = JSON.parse(msg);
-                if (obj.Status == 0) {
-                    btn.children().removeClass('fa fa-unlock-alt');
-                    btn.children().addClass('fa fa-lock');
-                } else {
-                    btn.children().removeClass('fa fa-lock');
-                    btn.children().addClass('fa fa-unlock-alt');
-                }
+                    var obj = JSON.parse(msg);
+                    document.getElementById('' + obj.ID).remove(this);
+                });
+        });
+    </script>
+
+    <script>
+        $(document).on("click", ".edit", function () {
+            document.getElementById('inID').value = $(this).data('id');
+            document.getElementById('inTen').value = $(this).data('name');
+            document.getElementById('inSucChua').value = $(this).data('capacity');
+            document.getElementById('inChieuDai').value = $(this).data('length');
+            document.getElementById('inChieuRong').value = $(this).data('width');
+            document.getElementById('inTrangThai').value = $(this).data('status');
+            document.getElementById('inRap').value = $(this).data('cinema_id');
+        });
+    </script>
+    <script>
+        $(document).on("click", ".detail", function () {
+            var id = $(this).data('id');
+            document.getElementById('lbTen').innerText = $(this).data('name');
+            document.getElementById('lbSucChua').innerText = $(this).data('capacity');
+            document.getElementById('lbChieuDai').innerText = $(this).data('length');
+            document.getElementById('lbChieuRong').innerText = $(this).data('width');
+
+            var status = $(this).data('status');
+            if (status == 0) {
+                document.getElementById('lbTrangThai').innerText = "Không kích hoạt";
+            }
+            else {
+                document.getElementById('lbTrangThai').innerText = "Kích hoạt";
+            }
+
+            document.getElementById('lbRap').innerText = $(this).data('cinema');
+
+
+            $(document).on("click", ".delete", function () {
+                $.ajax({
+                    method: "GET",
+                    url: "../API/RoomsAPI/ChangeStatus",
+                    data: { 'id': id }
+                })
+                    .done(function (msg) {
+                        var obj = JSON.parse(msg);
+                        document.getElementById('' + obj.ID).remove();
+                    });
             });
         });
     </script>

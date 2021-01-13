@@ -21,37 +21,17 @@ namespace TwonCinema.Areas.Admin.Controllers
         }
 
         // GET: Admin/Rooms
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int status = 1)
         {
-            var dPContext = _context.Rooms.Include(r => r.Cinema);
-            return View(await dPContext.ToListAsync());
-        }
-
-        // GET: Admin/Rooms/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Rooms
-                .Include(r => r.Cinema)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        // GET: Admin/Rooms/Create
-        public IActionResult Create()
-        {
+            var dPContext = _context.Rooms.Include(r => r.Cinema).Where(c => c.Status == status);
+            ViewBag.ListRoom = await dPContext.ToListAsync();
             ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name");
             return View();
         }
+
+        // GET: Admin/Rooms/Details/5
+
+        // GET: Admin/Rooms/Create
 
         // POST: Admin/Rooms/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
@@ -66,39 +46,17 @@ namespace TwonCinema.Areas.Admin.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name", room.Cinema_ID);
-            return View(room);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: Admin/Rooms/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Rooms.FindAsync(id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name", room.Cinema_ID);
-            return View(room);
-        }
-
+     
         // POST: Admin/Rooms/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Capacity,Length,Width,Status,Cinema_ID")] Room room)
+        public async Task<IActionResult> Edit([Bind("ID,Name,Capacity,Length,Width,Status,Cinema_ID")] Room room)
         {
-            if (id != room.ID)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -119,40 +77,10 @@ namespace TwonCinema.Areas.Admin.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name", room.Cinema_ID);
-            return View(room);
-        }
-
-        // GET: Admin/Rooms/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var room = await _context.Rooms
-                .Include(r => r.Cinema)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (room == null)
-            {
-                return NotFound();
-            }
-
-            return View(room);
-        }
-
-        // POST: Admin/Rooms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var room = await _context.Rooms.FindAsync(id);
-            _context.Rooms.Remove(room);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Admin/Rooms/Delete/5
         private bool RoomExists(int id)
         {
             return _context.Rooms.Any(e => e.ID == id);
