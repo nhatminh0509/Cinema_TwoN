@@ -32,7 +32,14 @@ namespace TwonCinema.Controllers
                 err = "";
             }
             ViewBag.err = err;
+            HttpContext.Session.SetString("err", "");
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return View("Index");
         }
 
         public IActionResult Register()
@@ -55,7 +62,7 @@ namespace TwonCinema.Controllers
             }
             var str = JsonConvert.SerializeObject(login.First());
             HttpContext.Session.SetString("customer", str);
-            return Redirect("/Home/Index");
+            return Redirect("/");
         }
 
         [HttpPost]

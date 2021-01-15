@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TwonCinema.Areas.Admin.Data;
-
+using TwonCinema.Hubs;
 
 namespace TwonCinema
 {
@@ -35,6 +35,14 @@ namespace TwonCinema
 
             services.AddDbContext<DPContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DPContext")));
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +60,13 @@ namespace TwonCinema
             app.UseSession();
 
             app.UseFileServer();
+
+            app.UseCookiePolicy();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<BookingHub>("/bookingHub");
+            });
 
             app.UseEndpoints(endpoints =>
             {

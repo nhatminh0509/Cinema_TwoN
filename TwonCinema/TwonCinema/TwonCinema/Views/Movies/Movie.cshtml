@@ -23,14 +23,14 @@
                 <p><b>Diễn Viên: </b>@ViewBag.Movie.Cast</p>
                 <p><b>Khởi Chiếu: </b>@ViewBag.Movie.Release_Date.ToString("dd/MM/yyyy")</p>
                 <p><b>Thời lượng: </b>@ViewBag.Movie.Running_Time p</p>
-                @*<div class="fb-like" data-href="https://localhost:44309/Movies/Movie/@ViewBag.Movie.Slug" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>*@
+                <div class="fb-like" data-href="https://localhost:44309/Movies/Movie/@ViewBag.Movie.Slug" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>
                 <div class="mt-4">
                     <a href="#" data-toggle="modal" data-target="#myModal" class="datve btn read-button" data-moviename="@ViewBag.Movie.Name" data-id_movie="@ViewBag.Movie.ID" data-today="@today">Đặt vé <span class="fa fa-ticket ml-2" aria-hidden="true"></span></a>
                 </div>
             </div>
         </div>
         <p style="padding-top: 1rem;">@Html.Raw(ViewBag.Movie.Desc)</p>
-        @*<div class="fb-comments" data-href="https://localhost:44309/Movies/Movie/@{@ViewBag.Movie.Slug}" data-width="100%" data-numposts="5"></div>*@
+        <div class="fb-comments" data-href="https://localhost:44309/Movies/Movie/@{@ViewBag.Movie.Slug}" data-width="100%" data-numposts="5"></div>
     </div>
 </div>
 

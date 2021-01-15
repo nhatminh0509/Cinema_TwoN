@@ -71,7 +71,7 @@
             var btn = $(this);
             $.ajax({
                 method: "GET",
-                url: "../API/Movie_ShowAPI/ChangeStatus",
+                url: "../../../API/Movie_ShowAPI/ChangeStatus",
                 data: { 'id': id }
             })
                 .done(function (msg) {

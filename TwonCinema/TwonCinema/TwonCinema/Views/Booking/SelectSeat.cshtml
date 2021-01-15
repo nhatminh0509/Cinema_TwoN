@@ -119,7 +119,7 @@
 						resize: none;"></textarea>
                 </div>
                 <div class="col-3">
-                    <button onclick="$('#formghe').submit();" class="btn btn-outline-success btn-block" style="margin:10px 10px;">Tiếp tục</button>
+                    <button onclick="$('#formghe').submit();" class="btn btn-outline-success btn-block" id="btnbook" style="margin:10px 10px;">Tiếp tục</button>
                 </div>
             </div>
         </div>
@@ -127,9 +127,10 @@
 </div>
 
 
-<form action="/Booking/Booking" method="post" style="display: none;" id="formghe">
-    <input name="show" value="@ViewBag.Show.ID" />
-    <input id="inputghe" name="ghe[]">
+<form action="/Booking/Create" method="post" style="display: none;" id="formghe">
+    <input id="inputshow" name="show" value="@ViewBag.Show.ID" />
+    <input id="inputcustomer" name="customer" value="@ViewBag.Customer.ID" />
+    <input id="inputghe" required name="ghe[]">
     <input type="submit">
 </form>
 
@@ -159,11 +160,11 @@
 
         if (item.Category_Equipment.Level == 1)
         {
-            <script> document.getElementById('@row@col').innerHTML ='<Input type="checkbox" class="seat ghe@{@item.Category_Equipment.ID}" id="ghe@{@item.ID}" data-id="@item.ID" value="@item.Name"></Input><label for="ghe@{@item.ID}"></label>';</script>
+            <script> document.getElementById('@row@col').innerHTML = '<Input type="checkbox" class="seat ghe@{@item.Category_Equipment.ID}" id="ghe@{@item.ID}" data-id="@item.ID" data-row="@row" data-col="@col" data-level="@item.Category_Equipment.ID" value="@item.Name"></Input><label for="ghe@{@item.ID}"></label>';</script>
         }
         else if (item.Category_Equipment.Level == 2)
         {
-        <script> document.getElementById('@row@col').innerHTML ='<span class="thietbi@{@item.Category_Equipment.ID}" id="thietbi@{@item.ID}" ></span>';</script>
+            <script> document.getElementById('@row@col').innerHTML ='<span class="thietbi@{@item.Category_Equipment.ID}" id="thietbi@{@item.ID}" ></span>';</script>
         }
         for (int i = 1; i < item.Category_Equipment.Count_Cell; i++)
         {
@@ -171,7 +172,21 @@
             <script> document.getElementById('@row@col').style='display:none;'; </script>
         }
     }
+
+    @foreach (var booking in ViewBag.listBooking)
+    {
+        foreach (var item in booking.listBookingDetail)
+        {
+            int row = item.Equipment.Row_ID;
+            int col = item.Equipment.Col_ID;
+            <script> document.getElementById('@row@col').innerHTML ='<span class="checked@{@item.Equipment.Equipment_Level_ID}" id="ghe@{@item.ID}" ></span>';</script>
+        }
+    }
+    <script src="~/lib/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/book.js"></script>
 }
+
+
 
 @*<tr>
         <td></td>

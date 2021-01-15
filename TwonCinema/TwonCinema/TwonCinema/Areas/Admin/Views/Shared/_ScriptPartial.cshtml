@@ -31,13 +31,13 @@
 <script>
     $.ajax({
         method: "GET",
-        url: "../../API/StafsAPI/GetStafLogin",
+        url: "https://localhost:44309/API/StafsAPI/GetStafLogin",
         data: null
     })
     .done(function (msg) {
         var obj = JSON.parse(msg);
         document.getElementById('namestaf').innerHTML = obj.Name;
-        document.getElementById('imgStafLogin').src = `../../Uploads/Staf/${obj.Avatar}`;
+        document.getElementById('imgStafLogin').src = `https:///localhost:44309/Uploads/Staf/${obj.Avatar}`;
     });
 </script>
 
