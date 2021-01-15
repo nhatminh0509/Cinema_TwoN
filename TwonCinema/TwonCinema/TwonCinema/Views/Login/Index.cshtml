@@ -1,0 +1,67 @@
+﻿@using TwonCinema.Areas.Admin.Models
+@addTagHelper *, Microsoft.AspNetCore.MVC.TagHelpers
+@model Customer
+
+@{
+    Layout = "";
+}
+<!doctype html>
+<html lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>TwoN Cinema | Login</title>
+
+    <link rel="stylesheet" href="~/client-asset/assets/css/style-starter.css">
+
+    <link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="~/client-asset/css/login.css">
+</head>
+<body>
+    <section class="form-26">
+        <div class="form-26-mian">
+            <div class="layer">
+                <div class="wrapper">
+                    <div class="form-inner-cont">
+                        <div class="forms-26-info">
+                            <h2>Đăng Nhập</h2>
+                            <p>TwoN Cinema - Hệ thống rạp phim giá rẻ dành cho học sinh - sinh viên.</p>
+                        </div>
+                        <div class="form-right-inf">
+                            <form asp-action="Login" method="post" class="signin-form">
+                                <div class="forms-gds">
+                                    <input type="hidden" asp-for="Name" />
+                                    <input type="hidden" asp-for="Phone" />
+                                    <input type="hidden" asp-for="Total_Spending" />
+                                    <input type="hidden" asp-for="Status" />
+                                    <div class="form-input">
+                                        <input type="email" asp-for="Email" placeholder="Email" required />
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="password" asp-for="Password" placeholder="Mật Khẩu" required />
+                                    </div>
+                                    <div class="form-input"><button type="submit" class="btn">Đăng Nhập</button></div>
+                                </div>
+                                <h6 class="already"> Chưa có tài khoản? <a asp-action="Register"><span>Đăng Kí</span></a></h6>
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+@if (ViewBag.err != "")
+{
+<script>
+    alert('Bạn phải đăng nhập để thực hiện chức năng này !!');
+</script>
+}

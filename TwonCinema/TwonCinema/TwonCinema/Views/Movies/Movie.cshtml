@@ -23,13 +23,14 @@
                 <p><b>Diễn Viên: </b>@ViewBag.Movie.Cast</p>
                 <p><b>Khởi Chiếu: </b>@ViewBag.Movie.Release_Date.ToString("dd/MM/yyyy")</p>
                 <p><b>Thời lượng: </b>@ViewBag.Movie.Running_Time p</p>
-                </p>
+                @*<div class="fb-like" data-href="https://localhost:44309/Movies/Movie/@ViewBag.Movie.Slug" data-width="" data-layout="button_count" data-action="like" data-size="small" data-share="true"></div>*@
                 <div class="mt-4">
                     <a href="#" data-toggle="modal" data-target="#myModal" class="datve btn read-button" data-moviename="@ViewBag.Movie.Name" data-id_movie="@ViewBag.Movie.ID" data-today="@today">Đặt vé <span class="fa fa-ticket ml-2" aria-hidden="true"></span></a>
                 </div>
             </div>
         </div>
         <p style="padding-top: 1rem;">@Html.Raw(ViewBag.Movie.Desc)</p>
+        @*<div class="fb-comments" data-href="https://localhost:44309/Movies/Movie/@{@ViewBag.Movie.Slug}" data-width="100%" data-numposts="5"></div>*@
     </div>
 </div>
 
@@ -51,9 +52,9 @@
                 {
                     <div class="item vhny-grid">
                         <div class="box16 mb-0">
-                            <a asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">
+                            <a asp-controller="Movies" asp-action="Movie" asp-route-slug="@movie.Slug">
                                 <figure>
-                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_2" alt="">
                                 </figure>
                                 <div class="box-content">
 
@@ -68,7 +69,7 @@
                                 </div>
                             </a>
                         </div>
-                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">@movie.Name</a></h3>
+                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-slug="@movie.Slug">@movie.Name</a></h3>
                         <div class="button-center text-center mt-4">
                             <a href="#" data-toggle="modal" data-target="#myModal" data-id_movie="@movie.ID" data-moviename="@movie.Name" data-today="@today" class="datve btn watch-button">Đặt vé ngay</a>
                         </div>

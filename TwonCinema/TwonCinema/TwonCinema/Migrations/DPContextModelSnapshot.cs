@@ -19,6 +19,56 @@ namespace TwonCinema.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.1");
 
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Booking", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Customer_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Show_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_Price")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("Customer_ID");
+
+                    b.HasIndex("Show_ID");
+
+                    b.ToTable("Bookings");
+                });
+
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.BookingDetail", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("Booking_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Seat_ID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("Booking_ID");
+
+                    b.HasIndex("Seat_ID");
+
+                    b.ToTable("BookingDetails");
+                });
+
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Equipment", b =>
                 {
                     b.Property<int>("ID")
@@ -88,6 +138,40 @@ namespace TwonCinema.Migrations
                     b.ToTable("Cinemas");
                 });
 
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Customer", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total_Spending")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Customers");
+                });
+
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Equipment", b =>
                 {
                     b.Property<int>("ID")
@@ -149,6 +233,9 @@ namespace TwonCinema.Migrations
                     b.Property<string>("Image_2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Keyword")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
 
@@ -164,6 +251,9 @@ namespace TwonCinema.Migrations
 
                     b.Property<int>("Running_Time")
                         .HasColumnType("int");
+
+                    b.Property<string>("Slug")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -273,6 +363,44 @@ namespace TwonCinema.Migrations
                     b.ToTable("Stafs");
                 });
 
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Booking", b =>
+                {
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Customer", "Customer")
+                        .WithMany("listBooking")
+                        .HasForeignKey("Customer_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Movie_Show", "Movie_Show")
+                        .WithMany("listBooking")
+                        .HasForeignKey("Show_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Movie_Show");
+                });
+
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.BookingDetail", b =>
+                {
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Booking", "Booking")
+                        .WithMany("listBookingDetail")
+                        .HasForeignKey("Booking_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TwonCinema.Areas.Admin.Models.Equipment", "Equipment")
+                        .WithMany()
+                        .HasForeignKey("Seat_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Booking");
+
+                    b.Navigation("Equipment");
+                });
+
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Cinema", b =>
                 {
                     b.HasOne("TwonCinema.Areas.Admin.Models.Staf", "Staf")
@@ -333,6 +461,11 @@ namespace TwonCinema.Migrations
                     b.Navigation("Cinema");
                 });
 
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Booking", b =>
+                {
+                    b.Navigation("listBookingDetail");
+                });
+
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Category_Equipment", b =>
                 {
                     b.Navigation("listEquipment");
@@ -341,6 +474,16 @@ namespace TwonCinema.Migrations
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Cinema", b =>
                 {
                     b.Navigation("listRoom");
+                });
+
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Customer", b =>
+                {
+                    b.Navigation("listBooking");
+                });
+
+            modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Movie_Show", b =>
+                {
+                    b.Navigation("listBooking");
                 });
 
             modelBuilder.Entity("TwonCinema.Areas.Admin.Models.Room", b =>

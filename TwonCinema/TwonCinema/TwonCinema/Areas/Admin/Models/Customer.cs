@@ -17,6 +17,6 @@ namespace TwonCinema.Areas.Admin.Models
         [Required(ErrorMessage = "Số điện thoại không được bỏ trống")] public string Phone { get; set; }
         public int Total_Spending { get; set; }
         [Required(ErrorMessage = "Trạng thái không được bỏ trống")] public int Status { get; set; }
-        public ICollection<Room> listRoom { get; set; }
+        public ICollection<Booking> listBooking { get; set; }
     }
 }

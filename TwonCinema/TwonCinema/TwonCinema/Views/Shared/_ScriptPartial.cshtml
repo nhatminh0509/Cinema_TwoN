@@ -207,3 +207,23 @@
 <!--//MENU-JS-->
 
 <script src="~/client-asset/assets/js/bootstrap.min.js"></script>
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v9.0&appId=2437630969897064&autoLogAppEvents=1" nonce="Xo0RaZx6"></script>
+
+<script>
+    $.ajax({
+        method: "GET",
+        url: "../../API/CustomersAPI/GetCustomerLogin",
+        data: null
+    })
+        .done(function (msg) {
+            var obj = JSON.parse(msg);
+            if (obj != null) {
+                document.getElementById('customerlink').href = '/login/logout';
+                document.getElementById('customer_icon').className = 'fa fa-sign-out';
+                document.getElementById('customer').innerHTML = obj.Name;
+            }
+        });
+</script>
+

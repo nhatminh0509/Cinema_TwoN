@@ -1,0 +1,81 @@
+﻿@using TwonCinema.Areas.Admin.Models
+@addTagHelper *, Microsoft.AspNetCore.MVC.TagHelpers
+@model Customer
+
+@{
+    Layout = "";
+}
+<!doctype html>
+<html lang="zxx">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>MN Cinema | Đăng Kí</title>
+
+    <link rel="stylesheet" href="~/client-asset/assets/css/style-starter.css">
+
+    <link href="//fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,600&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet" href="~/client-asset/css/register.css">
+</head>
+<body>
+    <section class="form-26-1">
+        <div class="form-26-mian">
+            <div class="layer">
+                <div class="wrapper">
+                    <div class="form-inner-cont">
+                        <div class="forms-26-info">
+                            <h2>Đăng Kí</h2>
+                            <p>TwoN Cinema - Hệ thống rạp phim giá rẻ dành cho học sinh - sinh viên.</p>
+                        </div>
+                        <div class="form-right-inf">
+                            <form asp-action="Register" method="post" class="signin-form">
+                                <div class="forms-gds">
+                                    <input type="hidden" asp-for="Total_Spending" value="0" />
+                                    <input type="hidden" asp-for="Status" value="1" />
+                                    <div class="form-input">
+                                        <input type="text" asp-for="Name" placeholder="Tên" required />
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="text" asp-for="Phone" placeholder="Số điện thoại" required />
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="email" asp-for="Email" placeholder="Email" required />
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="password" id="pass" onkeyup="kiemtra();" asp-for="Password" placeholder="Mật Khẩu" required />
+                                    </div>
+                                    <div class="form-input">
+                                        <input type="password" id="comfirmpass" onkeyup="kiemtra()" placeholder="Nhập Lại Mật Khẩu" required />
+                                    </div>
+                                    <div class="form-input"><button disabled type="submit" id="btnReg" class="btn">Đăng Kí</button></div>
+                                </div>
+                                <h6 class="already">Đã có tài khoản? <a asp-action="Index"><span>Đăng Nhập</span></a></h6>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+
+<script>
+  
+
+    var kiemtra = () => {
+        let pass = document.getElementById('pass').value;
+        let comfirmpass = document.getElementById('comfirmpass').value;
+
+        if (pass == comfirmpass) {
+            document.getElementById('btnReg').disabled = false;
+        }
+        else {
+            document.getElementById('btnReg').disabled = true;
+        }
+    }
+</script>

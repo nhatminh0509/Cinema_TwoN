@@ -23,6 +23,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Rooms
         public async Task<IActionResult> Index(int status = 1)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var dPContext = _context.Rooms.Include(r => r.Cinema).Where(c => c.Status == status);
             ViewBag.ListRoom = await dPContext.ToListAsync();
             ViewData["Cinema_ID"] = new SelectList(_context.Cinemas, "ID", "Name");
@@ -40,6 +41,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Capacity,Length,Width,Status,Cinema_ID")] Room room)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (ModelState.IsValid)
             {
                 _context.Add(room);
@@ -57,6 +59,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit([Bind("ID,Name,Capacity,Length,Width,Status,Cinema_ID")] Room room)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (ModelState.IsValid)
             {
                 try

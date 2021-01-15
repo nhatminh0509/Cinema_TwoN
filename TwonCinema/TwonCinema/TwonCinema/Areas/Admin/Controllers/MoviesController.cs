@@ -25,12 +25,14 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movies
         public async Task<IActionResult> Index()
         {
+            Middleware.CheckStafLogin(HttpContext);
             return View(await _context.Movies.ToListAsync());
         }
 
         // GET: Admin/Movies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -49,6 +51,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movies/Create
         public IActionResult Create()
         {
+            Middleware.CheckStafLogin(HttpContext);
             return View();
         }
 
@@ -57,8 +60,9 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Image_1,Image_2,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful, IFormFile ful_2)
+        public async Task<IActionResult> Create([Bind("ID,Name,Image_1,Image_2,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Keyword,Slug,Status")] Movie movie, IFormFile ful, IFormFile ful_2)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (ModelState.IsValid)
             {
                 _context.Add(movie);
@@ -96,6 +100,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movies/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -114,8 +119,9 @@ namespace TwonCinema.Areas.Admin.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Image_1,Image_2,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Status")] Movie movie, IFormFile ful, IFormFile ful_2)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Image_1,Image_2,Trailer,Directors,Cast,Genre,Release_Date,Running_Time,Language,Rated,Desc,Keyword,Slug,Status")] Movie movie, IFormFile ful, IFormFile ful_2)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id != movie.ID)
             {
                 return NotFound();
@@ -171,6 +177,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -191,6 +198,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var movie = await _context.Movies.FindAsync(id);
             _context.Movies.Remove(movie);
             await _context.SaveChangesAsync();

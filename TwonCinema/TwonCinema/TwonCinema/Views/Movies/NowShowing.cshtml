@@ -26,9 +26,9 @@
                 {
                     <div class="item vhny-grid">
                         <div class="box16 mb-0">
-                            <a asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">
+                            <a asp-controller="Movies" asp-action="Movie" asp-route-slug="@movie.Slug">
                                 <figure>
-                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_1" alt="">
+                                    <img class="img-fluid" src="~/Uploads/Movie/@movie.Image_2" alt="">
                                 </figure>
                                 <div class="box-content">
 
@@ -41,7 +41,7 @@
                                 </div>
                             </a>
                         </div>
-                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-id="@movie.ID">@movie.Name</a></h3>
+                        <h3> <a class="title-gd" asp-controller="Movies" asp-action="Movie" asp-route-slug="@movie.Slug">@movie.Name</a></h3>
                         <div class="button-center text-center mt-4">
                             <a href="#" data-toggle="modal" data-target="#myModal" data-id_movie="@movie.ID" data-moviename="@movie.Name" data-today="@today" class="datve btn watch-button">Đặt vé ngay</a>
                         </div>

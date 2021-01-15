@@ -23,6 +23,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movie_Show
         public async Task<IActionResult> ListInRoom(int id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id.ToString() == null)
             {
                 return NotFound();
@@ -36,6 +37,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movie_Show/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -56,6 +58,7 @@ namespace TwonCinema.Areas.Admin.Controllers
 
         public IActionResult Index(int idCinema, DateTime? date)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (idCinema == 0)
             {
                 return NotFound();
@@ -84,6 +87,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Start_Show,Status,Room_ID,Movie_ID")] Movie_Show movie_Show)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var room = _context.Rooms.Where(m => m.ID.Equals(movie_Show.Room_ID)).First();
             if (ModelState.IsValid)
             {
@@ -123,7 +127,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movie_Show/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -146,6 +150,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Start_Show,Status,Room_ID,Movie_ID")] Movie_Show movie_Show)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var room = _context.Rooms.Where(m => m.ID.Equals(movie_Show.Room_ID)).First();
             if (id != movie_Show.ID)
             {
@@ -180,6 +185,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Movie_Show/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -202,6 +208,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var movie_Show = await _context.Movie_Shows.FindAsync(id);
             _context.Movie_Shows.Remove(movie_Show);
             await _context.SaveChangesAsync();

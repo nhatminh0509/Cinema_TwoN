@@ -29,13 +29,13 @@ namespace TwonCinema.Controllers
             return View();
         }
 
-        public IActionResult Movie(int? id)
+        public IActionResult Movie(string? slug)
         {
-            if(id == null)
+            if(slug == null)
             {
                 return NotFound();
             }
-            var movie = _context.Movies.Find(id);
+            var movie = _context.Movies.Where(m=>m.Slug.Equals(slug)).FirstOrDefault();
             if (movie == null)
             {
                 return NotFound();

@@ -127,7 +127,8 @@
 </div>
 
 
-<form style="display: none;" id="formghe">
+<form action="/Booking/Booking" method="post" style="display: none;" id="formghe">
+    <input name="show" value="@ViewBag.Show.ID" />
     <input id="inputghe" name="ghe[]">
     <input type="submit">
 </form>
@@ -137,11 +138,12 @@
     <script>
         $(document).on("change", ".seat", function () {
             var allSeatsVals = [];
-
+            var allSeatsID = [];
             $('#seatsBlock :checked').each(function () {
                 allSeatsVals.push($(this).val());
+                allSeatsID.push($(this).data('id'));
             });
-            $('#inputghe').val(allSeatsVals);
+            $('#inputghe').val(allSeatsID);
             $('#seatsDisplay').val(allSeatsVals);
         });
 
@@ -157,7 +159,7 @@
 
         if (item.Category_Equipment.Level == 1)
         {
-            <script> document.getElementById('@row@col').innerHTML ='<Input type="checkbox" class="seat ghe@{@item.Category_Equipment.ID}" id="ghe@{@item.ID}" value="@item.Name"></Input><label for="ghe@{@item.ID}"></label>';</script>
+            <script> document.getElementById('@row@col').innerHTML ='<Input type="checkbox" class="seat ghe@{@item.Category_Equipment.ID}" id="ghe@{@item.ID}" data-id="@item.ID" value="@item.Name"></Input><label for="ghe@{@item.ID}"></label>';</script>
         }
         else if (item.Category_Equipment.Level == 2)
         {

@@ -20,6 +20,9 @@ namespace TwonCinema.Areas.Admin.Data
         public DbSet<Equipment> Equipments { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Movie_Show> Movie_Shows { get; set; }
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BookingDetail> BookingDetails { get; set; }
 
     }
 }

@@ -23,6 +23,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Equipments
         public async Task<IActionResult> Index(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -40,6 +41,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Equipments/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -60,6 +62,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Equipments/Create
         public IActionResult Create()
         {
+            Middleware.CheckStafLogin(HttpContext);
             ViewData["Equipment_Level_ID"] = new SelectList(_context.Category_Equipment, "ID", "Name");
             ViewData["Room_ID"] = new SelectList(_context.Rooms, "ID", "Name");
             return View();
@@ -72,6 +75,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Row_ID,Col_ID,Status,Room_ID,Equipment_Level_ID")] Equipment equipment)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (ModelState.IsValid)
             {
                 _context.Add(equipment);
@@ -83,6 +87,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Equipments/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -105,6 +110,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Row_ID,Col_ID,Status,Room_ID,Equipment_Level_ID")] Equipment equipment)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id != equipment.ID)
             {
                 return NotFound();
@@ -138,6 +144,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Equipments/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -160,6 +167,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var equipment = await _context.Equipments.FindAsync(id);
             _context.Equipments.Remove(equipment);
             await _context.SaveChangesAsync();

@@ -74,6 +74,16 @@
                 <span asp-validation-for="Rated" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Từ Khóa:</label>
+                <textarea asp-for="Keyword" class="form-control" id="content"></textarea>
+                <span asp-validation-for="Keyword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Slug:</label>
+                <input asp-for="Slug" class="form-control" />
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label class="control-label">Mô Tả</label>
                 <textarea asp-for="Desc" class="form-control" id="desc"></textarea>
                 <span asp-validation-for="Desc" class="text-danger"></span>

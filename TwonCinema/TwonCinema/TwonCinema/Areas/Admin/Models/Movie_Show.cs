@@ -13,6 +13,7 @@ namespace TwonCinema.Areas.Admin.Models
         public int ID { get; set; }
         [Required(ErrorMessage = "Thời gian bắt đầu không được bỏ trống")] public DateTime Start_Show { get; set; }
         [Required(ErrorMessage = "Trạng thái không được bỏ trống")] public int Status { get; set; }
+        public ICollection<Booking> listBooking { get; set; }
         [Required(ErrorMessage = "Phòng không được bỏ trống")] public int Room_ID { get; set; }
         [ForeignKey("Room_ID")]
         public virtual Room Room { get; set; }

@@ -40,6 +40,10 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
+        <form asp-area="Admin" asp-controller="Movie_Show" asp-action="Index" method="get">
+            <input type="hidden" name="idCinema" value="@Model.Room.Cinema_ID" />
+            <input type="hidden" name="date" value="@Model.Start_Show" />
+            <button type="submit" class="btn btn-outline-secondary text-secondary btn-block">Trở Về</button>
+        </form>
     </form>
 </div>

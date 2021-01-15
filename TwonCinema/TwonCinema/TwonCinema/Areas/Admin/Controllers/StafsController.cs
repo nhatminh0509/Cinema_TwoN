@@ -25,12 +25,14 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Stafs
         public async Task<IActionResult> Index()
         {
+            Middleware.CheckStafLogin(HttpContext);
             return View(await _context.Stafs.ToListAsync());
         }
 
         // GET: Admin/Stafs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -49,6 +51,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Stafs/Create
         public IActionResult Create()
         {
+            Middleware.CheckStafLogin(HttpContext);
             return View();
         }
 
@@ -59,8 +62,10 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,Name,Email,Password,Avatar,Phone,Address,Status")] Staf staf, IFormFile ful)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (ModelState.IsValid)
             {
+                staf.Password = StringProcessing.CreateMD5(staf.Password);
                 _context.Add(staf);
                 await _context.SaveChangesAsync();
                 var tenImg = staf.ID + "." + ful.FileName.Split(".")[ful.FileName.Split(".").Length - 1];
@@ -81,6 +86,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Stafs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -101,6 +107,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Email,Password,Avatar,Phone,Address,Status")] Staf staf,IFormFile ful)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id != staf.ID)
             {
                 return NotFound();
@@ -143,6 +150,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         // GET: Admin/Stafs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             if (id == null)
             {
                 return NotFound();
@@ -163,6 +171,7 @@ namespace TwonCinema.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            Middleware.CheckStafLogin(HttpContext);
             var staf = await _context.Stafs.FindAsync(id);
             _context.Stafs.Remove(staf);
             await _context.SaveChangesAsync();

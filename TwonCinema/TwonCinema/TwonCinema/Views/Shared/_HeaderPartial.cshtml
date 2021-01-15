@@ -10,10 +10,11 @@
                     </div>
                     <div class="menu-overlay-left col-6 ml-auto">
                         <div class="two-pops d-flex">
-                            <a href="login.html" class="author-user">
-                                <span class="fa fa-user"
-                                      aria-hidden="true"> Đăng Nhập</span>
-                            </a>
+                            <div class="author-user">
+                                <a id="customerlink" href="/login"><span style="color:white;" class="fa fa-user" aria-hidden="true" id="customer_icon"></span>
+                                </a>
+                                <span style="color:white;" id="customer"> Đăng Nhập</span>
+                            </div>
                             <div class="overlay-menuv-hny">
                                 <input type="checkbox" id="op" />
                                 <div class="side-menu-hny">
@@ -132,9 +133,9 @@
                                 <a class="dropdown-item" asp-controller="Movies" asp-action="ComingSoon">Phim Sắp Chiếu</a>
                             </div>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link" href="lifestyle.html" style="color: var(--theme-title);">Hệ Thống Rạp</a>
-                        </li>
+                        </li>*@
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Home" asp-action="About" style="color: var(--theme-title);">Về Chúng Tôi</a>
                         </li>

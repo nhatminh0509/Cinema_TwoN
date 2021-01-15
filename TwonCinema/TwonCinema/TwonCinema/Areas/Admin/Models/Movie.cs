@@ -22,6 +22,8 @@ namespace TwonCinema.Areas.Admin.Models
         public string Language { get; set; }
         public string Rated { get; set; }
         public string Desc { get; set; }
+        public string Keyword { get; set; }
+        public string Slug { get; set; }
         [Required(ErrorMessage = "Trạng thái không được bỏ trống")] public int Status { get; set; }
 
     }

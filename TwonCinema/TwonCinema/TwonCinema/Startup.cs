@@ -26,6 +26,12 @@ namespace TwonCinema
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDistributedMemoryCache();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromSeconds(300);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddDbContext<DPContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DPContext")));
@@ -43,6 +49,8 @@ namespace TwonCinema
 
             app.UseRouting();
 
+            app.UseSession();
+
             app.UseFileServer();
 
             app.UseEndpoints(endpoints =>
@@ -53,9 +61,10 @@ namespace TwonCinema
                 );
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}"
+                    pattern: "{controller=Home}/{action=Index}/{slug?}"
                 );
             });
+            
         }
     }
 }

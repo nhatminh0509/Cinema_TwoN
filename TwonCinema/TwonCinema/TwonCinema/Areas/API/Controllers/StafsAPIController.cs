@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using TwonCinema.Areas.Admin.Controllers;
 using TwonCinema.Areas.Admin.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,6 +22,11 @@ namespace TwonCinema.Areas.API.Controllers
             _context = context;
         }
 
+        public string GetStafLogin()
+        {
+            var staf = Middleware.StafLogin(HttpContext);
+            return JsonConvert.SerializeObject(staf);
+        }
 
         [HttpGet]
         public string ChangeStatus(int id)

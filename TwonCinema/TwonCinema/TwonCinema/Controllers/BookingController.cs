@@ -18,7 +18,8 @@ namespace TwonCinema.Controllers
         }
         public IActionResult SelectSeat(int? idShow)
         {
-            if(idShow == null)
+            Middleware.CheckCustomerLogin(HttpContext);
+            if (idShow == null)
             {
                 return NotFound();
             }
@@ -36,6 +37,14 @@ namespace TwonCinema.Controllers
             ViewBag.listCate = cate;
             var listEquipmentInRoom = _context.Equipments.Include(m=>m.Category_Equipment).Where(m => m.Room_ID.Equals(show.Room_ID)).ToList();
             ViewBag.listEquipments = listEquipmentInRoom;
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Booking(string show,string ghe)
+        {
+            string[] listID = ghe.Split(',');
+
             return View();
         }
     }
