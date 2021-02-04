@@ -1282,3 +1282,4 @@ C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\D
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Login\Index.cshtml.g.cs
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Views\Login\Register.cshtml.g.cs
 C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\bin\Debug\netcoreapp3.1\libman.json
+C:\Users\Nhat-Minh\Desktop\TwonCinema_ASP\TwonCinema\TwonCinema\TwonCinema\obj\Debug\netcoreapp3.1\Razor\Areas\Admin\Views\Customers\Index.cshtml.g.cs

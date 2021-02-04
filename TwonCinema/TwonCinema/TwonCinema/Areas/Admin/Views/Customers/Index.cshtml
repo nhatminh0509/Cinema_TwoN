@@ -1,0 +1,200 @@
+﻿@model TwonCinema.Areas.Admin.Models.Customer
+@{
+    ViewData["Title"] = "Danh Sách Khách Hàng";
+}
+<style>
+    .active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
+
+    .active-cyan input.form-control[type=text] {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
+
+    .active-cyan .fa, .active-cyan-2 .fa {
+        color: #4dd0e1;
+    }
+</style>
+<center>
+    <h1>Danh Sách Khách Hàng</h1>
+</center>
+@*<p>
+    <a data-toggle="modal" data-target="#myCreate" class="btn btn-success text-white btn-block">Thêm Mới</a>
+</p>*@
+<form class="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <input class="form-control form-control-sm ml-3 w-75" type="text" id="myInput" placeholder="Search"
+           aria-label="Search">
+</form>
+<form  asp-action="Index" method="GET" id="myform" class="form-inline d-flex justify-content-end md-form form-sm active-cyan active-cyan-2 mt-2">
+    <select name="status" onchange="$('#myform').submit();" class="form-control">
+        <option value="1">Lọc</option>
+        <option value="1">Còn sử dụng</option>
+        <option value="0">Ngưng sử dụng</option>
+    </select>
+</form>
+<br/>
+<table class="table" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Tên
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Số điên thoại
+            </th>
+            <th>
+                Trạng Thái
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="myTable">
+        @foreach (var item in ViewBag.ListCustomer)
+        {
+            <tr id="@item.ID">
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.Phone
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
+                    }
+                    else if (item.Status == 0)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
+                    }
+                </td>
+                <td>
+                    <a data-toggle="modal" data-target="#myDetail" data-id="@item.ID" data-name="@item.Name" data-email="@item.Email" data-phone="@item.Phone" data-tongchitieu="@item.Total_Spending" data-status="@item.Status" class="detail"><label class="fa fa-info"></label> Chi Tiết</a> 
+                   
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@*ChiTiet*@
+<div class="container">
+    <div class="modal fade" id="myDetail" role="dialog">
+       
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="title">Chi Tiết Khách Hàng</h4>
+                    </div>
+                    <div class="modal-body">
+                        <dl class="row">
+                            <dt class="col-sm-5">
+                                Tên:
+                            </dt>
+                            <dd class="col-sm-7" id="lbTen">
+                              
+                            </dd>
+                            <dt class="col-sm-5">
+                               Email:
+                            </dt>
+                            <dd class="col-sm-7"id="lbEmail">
+                               
+                            </dd>
+                            <dt class="col-sm-5">
+                                Số điện thoại:
+                            </dt>
+                            <dd class="col-sm-7"id="lbSDT">
+                               
+                            </dd>
+                            <dt class="col-sm-5">
+                                Tổng chi tiêu:
+                            </dt>
+                            <dd class="col-sm-7"id="lbTongChiTieu">
+                           
+                            </dd>
+                            <dt class="col-sm-5">
+                                Trạng Thái:
+                            </dt>
+                            <dd class="col-sm-7"id="lbTrangThai">
+                              
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" data-dismiss="modal" value="Xóa" class="btn btn-outline-danger delete" />
+                        <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        $('button[name =btnStatus]').click(function () {
+            var id = $(this).data('id');
+            var btn = $(this);
+            $.ajax({
+                method: "GET",
+                url: "../API/CustomersAPI/ChangeStatus",
+                data: { 'id': id }
+            })
+                .done(function (msg) {
+                    var obj = JSON.parse(msg);
+                    document.getElementById('' + obj.ID).remove(this);
+                });
+        });
+    </script>
+    <script>
+        $(document).on("click", ".detail", function () {
+            var id = $(this).data('id');
+            document.getElementById('lbTen').innerText = $(this).data('name');
+            document.getElementById('lbEmail').innerText = $(this).data('email');
+            document.getElementById('lbSDT').innerText = $(this).data('phone');
+            var status = $(this).data('status');
+            if (status == 0) {
+                document.getElementById('lbTrangThai').innerText = "Không kích hoạt";
+            }
+            else {
+                document.getElementById('lbTrangThai').innerText = "Kích hoạt";
+            }
+           
+            document.getElementById('lbTongChiTieu').innerText = $(this).data('tongchitieu');
+
+
+            $(document).on("click", ".delete", function () {
+                $.ajax({
+                    method: "GET",
+                    url: "../API/CustomersAPI/ChangeStatus",
+                    data: { 'id': id }
+                })
+                    .done(function (msg) {
+                        var obj = JSON.parse(msg);
+                        document.getElementById('' + obj.ID).remove();
+                    });
+            });
+        });
+    </script>
+}

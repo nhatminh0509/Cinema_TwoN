@@ -3,13 +3,40 @@
 @{
     ViewData["Title"] = "Danh Sách Phim";
 }
+<style>
+    .active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
 
+    .active-cyan input.form-control[type=text] {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
+
+    .active-cyan .fa, .active-cyan-2 .fa {
+        color: #4dd0e1;
+    }
+</style>
 <center>
     <h1>Danh Sách Phim</h1>
 </center>
 <p>
     <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
+<form class="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <input class="form-control form-control-sm ml-3 w-75" type="text" id="myInput" placeholder="Search"
+           aria-label="Search">
+</form>
+<form asp-action="Index" method="GET" id="myform" class="form-inline d-flex justify-content-end md-form form-sm active-cyan active-cyan-2 mt-2">
+    <select name="status" onchange="$('#myform').submit();" class="form-control">
+        <option value="1">Lọc</option>
+        <option value="1">Còn sử dụng</option>
+        <option value="0">Ngưng sử dụng</option>
+    </select>
+</form>
+<br />
 <table class="table" style="text-align:center">
     <thead>
         <tr>
@@ -28,41 +55,51 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @item.Release_Date.ToString("dd/MM/yyyy")
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Language)
-            </td>
-            <td>
-                @if (item.Status == 1)
-                {
-                    <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
-                }
-                else if (item.Status == 0)
-                {
-                    <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
-                }
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
-                <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
-            </td>
-        </tr>
+            <tr id="@item.ID">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @item.Release_Date.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Language)
+                </td>
+                <td>
+                    @if (item.Status == 1)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-unlock-alt"></i></button>
+                    }
+                    else if (item.Status == 0)
+                    {
+                        <button data-id="@item.ID" name="btnStatus" class="btn btn-link"><i class="fa fa-lock"></i></button>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID"><label class="fa fa-edit"></label> Sửa</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID"><label class="fa fa-info-circle"></label> Chi Tiết</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID"><label class="fa fa-trash"></label> Xóa</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
     <script>
         $('button[name =btnStatus]').click(function () {
             var id = $(this).data('id');
@@ -73,15 +110,9 @@
                 data: { 'id': id }
             })
                 .done(function (msg) {
-                var obj = JSON.parse(msg);
-                if (obj.Status == 0) {
-                    btn.children().removeClass('fa fa-unlock-alt');
-                    btn.children().addClass('fa fa-lock');
-                } else {
-                    btn.children().removeClass('fa fa-lock');
-                    btn.children().addClass('fa fa-unlock-alt');
-                }
-            });
+                    var obj = JSON.parse(msg);
+                    document.getElementById('' + obj.ID).remove(this);
+                });
         });
     </script>
 }

@@ -209,10 +209,10 @@ namespace TwonCinema.Areas.Admin.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             Middleware.CheckStafLogin(HttpContext);
-            var movie_Show = await _context.Movie_Shows.FindAsync(id);
+            var movie_Show = await _context.Movie_Shows.Include(m=>m.Room).Where(m=>m.ID.Equals(id)).FirstOrDefaultAsync();
             _context.Movie_Shows.Remove(movie_Show);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return Redirect("/Admin/Movie_Show?idCinema="+movie_Show.Room.Cinema_ID);
         }
 
         private bool Movie_ShowExists(int id)

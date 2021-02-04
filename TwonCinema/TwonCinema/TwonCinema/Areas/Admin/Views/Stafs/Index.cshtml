@@ -7,6 +7,21 @@
     Random random = new Random();
     int rand = random.Next(1000);
 }
+<style>
+    .active-cyan-2 input.form-control[type=text]:focus:not([readonly]) {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
+
+    .active-cyan input.form-control[type=text] {
+        border-bottom: 1px solid #4dd0e1;
+        box-shadow: 0 1px 0 0 #4dd0e1;
+    }
+
+    .active-cyan .fa, .active-cyan-2 .fa {
+        color: #4dd0e1;
+    }
+</style>
 
 <center>
     <h1>Danh Sách Nhân Viên</h1>
@@ -14,6 +29,20 @@
 <p>
     <a asp-action="Create" class="btn btn-success text-white btn-block">Thêm Mới</a>
 </p>
+<form class="form-inline d-flex justify-content-center md-form form-sm active-cyan active-cyan-2 mt-2">
+    <i class="fas fa-search" aria-hidden="true"></i>
+    <input class="form-control form-control-sm ml-3 w-75" type="text" id="myInput" placeholder="Search"
+           aria-label="Search">
+</form>
+<form asp-action="Index" method="GET" id="myform" class="form-inline d-flex justify-content-end md-form form-sm active-cyan active-cyan-2 mt-2">
+    <select name="status" onchange="$('#myform').submit();" class="form-control">
+        <option value="1">Lọc</option>
+        <option value="1">Còn sử dụng</option>
+        <option value="0">Ngưng sử dụng</option>
+    </select>
+</form>
+<br />
+
 <table class="table" style="text-align:center;">
     <thead>
         <tr>
@@ -30,10 +59,10 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="myTable">
         @foreach (var item in Model)
         {
-            <tr>
+            <tr id="@item.ID">
                 <td>
                     <img src="~/Uploads/Staf/@item.Avatar?@rand" style="width:40px;border-radius:50%;" />
                 </td>
@@ -67,6 +96,16 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
+        $(document).ready(function () {
+            $("#myInput").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
         $('button[name =btnStatus]').click(function () {
             var id = $(this).data('id');
             var btn = $(this);
@@ -76,15 +115,9 @@
                 data: { 'id': id }
             })
                 .done(function (msg) {
-                var obj = JSON.parse(msg);
-                if (obj.Status == 0) {
-                    btn.children().removeClass('fa fa-unlock-alt');
-                    btn.children().addClass('fa fa-lock');
-                } else {
-                    btn.children().removeClass('fa fa-lock');
-                    btn.children().addClass('fa fa-unlock-alt');
-                }
-            });
+                    var obj = JSON.parse(msg);
+                    document.getElementById('' + obj.ID).remove(this);
+                });
         });
     </script>
 }

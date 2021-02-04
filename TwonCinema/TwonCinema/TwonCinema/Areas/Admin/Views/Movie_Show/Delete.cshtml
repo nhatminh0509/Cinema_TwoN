@@ -11,39 +11,40 @@
     <h4>Movie_Show</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Start_Show)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Start_Show)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Status)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Room)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Room.Name)
-        </dd class>
-        <dt class = "col-sm-2">
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Movie)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Movie.Directors)
-        </dd class>
+        </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <form asp-area="Admin" asp-controller="Movie_Show" asp-action="Index" method="get">
-            <input type="hidden" name="idCinema" value="@Model.Room.Cinema_ID" />
-            <input type="hidden" name="date" value="@Model.Start_Show" />
-            <button type="submit" class="btn btn-outline-secondary text-secondary btn-block">Trở Về</button>
-        </form>
+        <input type="submit" value="Delete" class="btn btn-danger" />
+
+    </form>
+    <form asp-area="Admin" asp-controller="Movie_Show" asp-action="Index" method="get">
+        <input type="hidden" name="idCinema" value="@Model.Room.Cinema_ID" />
+        <input type="hidden" name="date" value="@Model.Start_Show" />
+        <button type="submit" class="btn btn-outline-secondary text-secondary btn-block">Trở Về</button>
     </form>
 </div>

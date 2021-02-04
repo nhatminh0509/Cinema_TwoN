@@ -23,10 +23,10 @@ namespace TwonCinema.Areas.Admin.Controllers
         }
 
         // GET: Admin/Movies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int status = 1)
         {
             Middleware.CheckStafLogin(HttpContext);
-            return View(await _context.Movies.ToListAsync());
+            return View(await _context.Movies.Where(c => c.Status == status).ToListAsync());
         }
 
         // GET: Admin/Movies/Details/5
